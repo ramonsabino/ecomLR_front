@@ -1,0 +1,10 @@
+.category-link {
+    text-decoration: none; /* Remove o sublinhado */
+    color: inherit; /* Mantém a cor padrão do link */
+  }
+
+  .card-container:hover {
+    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1); /* Adiciona uma sombra sutil */
+    transform: translateY(-5px); /* Move o card ligeiramente para cima */
+    transition: all 0.3s ease; /* Adiciona uma transição suave */
+  }

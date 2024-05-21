@@ -89,26 +89,23 @@ const Navbar: React.FC = () => {
             </Box>
           </Drawer>
           <IconButton
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="search"
-            sx={{ display: { xs: 'none', md: 'flex' }, mr: 2 }}
-          >
-            <SearchIcon />
-          </IconButton>
+              size="large"
+              color="inherit"
+              aria-label="search"
+            >
+              <SearchIcon />
+            </IconButton>
           <Logo>
-            <img src={logo} alt="Logo" style={{ height: '80px' }} />
+            <img src={logo} alt="Logo" style={{ height: '70px' }} />
           </Logo>
           <IconButton
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="search"
-            sx={{ display: { xs: 'none', md: 'flex' }, ml: 2 }}
-          >
-            <ShoppingCart />
-          </IconButton>
+              size="large"
+              color="inherit"
+              aria-label="cart"
+              sx={{ ml: 2 }}
+            >
+              <ShoppingCart />
+            </IconButton>
         </Toolbar>
       </Container>
       <Divider sx={{ display: { xs: 'none', md: 'block' } }} />
