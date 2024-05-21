@@ -4,6 +4,7 @@ import CarouselHome from './components/Carousel/Carousel';
 import { Box } from '@mui/material';
 import CategoriesMenu from './components/Categories/CategoriesMenu';
 import LaunchProducts from './components/LaunchProducts/LaunchProducts';
+import SectionProducts from './components/Section/Section';
 
 
 function App() {
@@ -15,6 +16,7 @@ function App() {
     </Box>
     <CategoriesMenu />
     <LaunchProducts />
+    <SectionProducts />
     </div>
   );
 }

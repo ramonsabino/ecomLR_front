@@ -4,8 +4,6 @@ import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
-import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 import Container from '@mui/material/Container';
@@ -28,26 +26,16 @@ const Logo = styled(Box)({
 const MenuItemsBox = styled(Box)(({ theme }) => ({
   display: 'flex',
   justifyContent: 'center',
-  padding: theme.spacing(2, 0),
+  padding: theme.spacing(1, 0), // Reduz o padding
 }));
 
 const Navbar: React.FC = () => {
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [drawerOpen, setDrawerOpen] = React.useState(false);
-
-  const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleCloseNavMenu = () => {
-    setAnchorEl(null);
-  };
 
   const toggleDrawer = (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
     if (
       event.type === 'keydown' &&
-      ((event as React.KeyboardEvent).key === 'Tab' ||
-        (event as React.KeyboardEvent).key === 'Shift')
+      ((event as React.KeyboardEvent).key === 'Tab' || (event as React.KeyboardEvent).key === 'Shift')
     ) {
       return;
     }
@@ -89,34 +77,34 @@ const Navbar: React.FC = () => {
             </Box>
           </Drawer>
           <IconButton
-              size="large"
-              color="inherit"
-              aria-label="search"
-            >
-              <SearchIcon />
-            </IconButton>
+            size="large"
+            color="inherit"
+            aria-label="search"
+          >
+            <SearchIcon />
+          </IconButton>
           <Logo>
-            <img src={logo} alt="Logo" style={{ height: '70px' }} />
+            <img src={logo} alt="Logo" style={{ height: '50px' }} /> {/* Reduza a altura da logo */}
           </Logo>
           <IconButton
-              size="large"
-              color="inherit"
-              aria-label="cart"
-              sx={{ ml: 2 }}
-            >
-              <ShoppingCart />
-            </IconButton>
+            size="large"
+            color="inherit"
+            aria-label="cart"
+            sx={{ ml: 2 }}
+          >
+            <ShoppingCart />
+          </IconButton>
         </Toolbar>
       </Container>
       <Divider sx={{ display: { xs: 'none', md: 'block' } }} />
       <MenuItemsBox sx={{ display: { xs: 'none', md: 'flex' } }}>
-        <Typography variant="h6" component="div" sx={{ marginLeft: 2, marginRight: 2 }}>
+        <Typography variant="h6" component="div" sx={{ marginLeft: 1, marginRight: 1 }}> {/* Reduza o margin */}
           Home
         </Typography>
-        <Typography variant="h6" component="div" sx={{ marginLeft: 2, marginRight: 2 }}>
+        <Typography variant="h6" component="div" sx={{ marginLeft: 1, marginRight: 1 }}> {/* Reduza o margin */}
           Products
         </Typography>
-        <Typography variant="h6" component="div" sx={{ marginLeft: 2, marginRight: 2 }}>
+        <Typography variant="h6" component="div" sx={{ marginLeft: 1, marginRight: 1 }}> {/* Reduza o margin */}
           Contact
         </Typography>
       </MenuItemsBox>

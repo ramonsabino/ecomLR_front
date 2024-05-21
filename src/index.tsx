@@ -13,6 +13,9 @@ const theme = createTheme({
     secondary: {
       main: '#cccfca', // Define a cor secundária como branco
     },
+    background: {
+      default: '#cccfca',
+    }
   },
 });
 
