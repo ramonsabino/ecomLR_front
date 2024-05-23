@@ -34,7 +34,7 @@ const products = [
     id: 4,
     name: "Produto 4",
     price: 90.0,
-    category: "SmartWatch",
+    category: "Smartwatch",
     image: smartWatch,
     brand: "WBS",
   },

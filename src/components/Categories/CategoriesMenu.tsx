@@ -1,5 +1,6 @@
 import React from 'react';
 import { Typography, Grid, Button, Card, CardContent, CardMedia, Box } from '@mui/material';
+import { Link } from 'react-router-dom'; // Importe o componente Link
 import airdotImage from '../../assets/fones/foneAirDots.jpg';
 import carregadorIos from '../../assets/carregadores/carregadorIos.jpg';
 import caixaJbl from '../../assets/caixasDeSom/caixaJbl.jpg';
@@ -16,8 +17,13 @@ const categories: Categories[] = [
     { name: 'Fones de Ouvido', image: airdotImage },
     { name: 'Carregadores', image: carregadorIos },
     { name: 'Caixas de Som', image: caixaJbl },
-    { name: 'SmartWatch', image: smartWbs },
+    { name: 'SmartWatchs', image: smartWbs },
 ];
+
+const formatCategoryName = (name: string) => {
+  // Substitua espaços por hífens e converta para minúsculas
+  return name.toLowerCase().replace(/\s+/g, '-');
+}
 
 const CategoriesMenu: React.FC = () => {
   return (
@@ -27,26 +33,26 @@ const CategoriesMenu: React.FC = () => {
           Categorias
         </Typography>
         <Grid container spacing={2} justifyContent="center">
-          {categories.map((categories, index) => (
+          {categories.map((category, index) => ( // Renomeie a variável de iteração para evitar conflito com o nome do array
             <Grid item key={index} className="card-container">
-              <a href={`/category/${categories.name}`} className="launch-link">
+              <Link to={`categorias/${formatCategoryName(category.name)}`} className="launch-link"> {/* Use o componente Link */}
                 <Card sx={{ borderRadius: 2 }}>
                   <CardMedia
                     component="img"
                     height="100"
-                    image={categories.image}
-                    alt={categories.name}
+                    image={category.image}
+                    alt={category.name}
                   />
                   <CardContent>
                     <Typography gutterBottom variant="h6" component="div">
-                      {categories.name}
+                      {category.name}
                     </Typography>
                     <Button variant="contained" color="primary">
                       Ver mais
                     </Button>
                   </CardContent>
                 </Card>
-              </a>
+              </Link>
             </Grid>
           ))}
         </Grid>
