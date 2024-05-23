@@ -1,8 +1,7 @@
-// ProductDetailPage.tsx
-
 import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
-import products from '../../context/product'; // Importe a lista de produtos aqui
+import { useCart } from '../../context/CartContext'; // Importe o contexto do carrinho
+import products from '../../context/product';
 import {
   Card,
   CardContent,
@@ -20,61 +19,39 @@ import CartSidebar from '../../components/Cart/CartSidebar';
 
 interface RouteParams {
   productId: string;
-  [key: string]: string; // Índice de string para outros parâmetros de rota
+  [key: string]: string | undefined; // Índice de string para outros parâmetros de rota
 }
 
 const ProductDetailPage: React.FC = () => {
   const { productId } = useParams<RouteParams>();
   const product = products.find((product) => product.id === Number(productId));
-  const [quantity, setQuantity] = useState<number>(0);
   const [cartOpen, setCartOpen] = useState<boolean>(false);
-  const [cartItems, setCartItems] = useState<{ id: number; name: string; quantity: number; price: number }[]>([]);
+  const { addToCart, cartItems, removeFromCart, clearCart, incrementQuantity, decrementQuantity } = useCart();
+  const [quantity, setQuantity] = useState<number>(1); // Inicializa a quantidade como 1
 
   if (!product) {
     return <div>Produto não encontrado!</div>;
   }
 
-  const handleAdd = () => {
-    setQuantity(quantity + 1);
-  };
-
-  const handleRemove = () => {
-    if (quantity > 0) {
-      setQuantity(quantity - 1);
-    }
-  };
-
   const handleBuy = () => {
-    const existingItemIndex = cartItems.findIndex(item => item.id === product.id);
-    const updatedCartItems = [...cartItems];
-
-    if (existingItemIndex !== -1) {
-      updatedCartItems[existingItemIndex].quantity += quantity;
+    // Verifica se o produto já está no carrinho
+    const existingItem = cartItems.find(item => item.id === product.id);
+  
+    if (existingItem) {
+      // Se o produto já estiver no carrinho, apenas incrementa a quantidade
+      incrementQuantity(product.id);
     } else {
-      updatedCartItems.push({ id: product.id, name: product.name, quantity, price: product.price });
+      // Se o produto não estiver no carrinho, adiciona-o com quantidade 1
+      addToCart({
+        id: product.id,
+        name: product.name,
+        quantity: 1, // Quantidade inicial
+        price: product.price
+      });
     }
-
-    setCartItems(updatedCartItems);
-    setQuantity(0); // Reset the quantity after adding to cart
-    setCartOpen(true); // Open the cart sidebar
-  };
-
-  const handleAddToCart = (id: number) => {
-    const updatedCartItems = cartItems.map(item =>
-      item.id === id ? { ...item, quantity: item.quantity + 1 } : item
-    );
-    setCartItems(updatedCartItems);
-  };
-
-  const handleRemoveFromCart = (id: number) => {
-    const updatedCartItems = cartItems.map(item =>
-      item.id === id ? { ...item, quantity: Math.max(item.quantity - 1, 1) } : item
-    );
-    setCartItems(updatedCartItems);
-  };
-
-  const handleClearCart = () => {
-    setCartItems([]);
+  
+    // Abra o carrinho de compras após adicionar o produto
+    setCartOpen(true);
   };
 
   return (
@@ -97,34 +74,12 @@ const ProductDetailPage: React.FC = () => {
               <Typography variant="h4">Detalhes do Produto</Typography>
               <Typography variant="h6">Nome do Produto: {product.name}</Typography>
               <Typography variant="body1">Preço: R${product.price}</Typography>
-
               {/* Contador e Botão de comprar */}
               <Box sx={{ display: 'flex', alignItems: 'center', my: 2 }}>
-                <Button variant="outlined" onClick={handleRemove}>
-                  <Remove />
-                </Button>
-                <Box
-                  sx={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    width: 50,
-                    height: 50,
-                    borderRadius: '50%',
-                    border: '1px solid #ccc',
-                    mx: 2,
-                  }}
-                >
-                  <Typography variant="body1">{quantity}</Typography>
-                </Box>
-                <Button variant="outlined" onClick={handleAdd}>
-                  <Add />
-                </Button>
-                <Button variant="contained" color="primary" sx={{ ml: 2 }} onClick={handleBuy}>
-                  Comprar
+                <Button variant="contained" color="primary" sx={{ ml: 0 }} onClick={handleBuy}>
+                  Adicionar ao Carrinho
                 </Button>
               </Box>
-
               {/* Accordion dos Meios de pagamento */}
               <Accordion>
                 <AccordionSummary expandIcon={<ExpandMore />}>
@@ -156,14 +111,14 @@ const ProductDetailPage: React.FC = () => {
         </Grid>
       </Grid>
 
-      {/* Sidebar do carrinho de compras */}
+      {/* Barra lateral do carrinho */}
       <CartSidebar
         open={cartOpen}
         onClose={() => setCartOpen(false)}
-        cartItems={cartItems}
-        onAdd={handleAddToCart}
-        onRemove={handleRemoveFromCart}
-        onClear={handleClearCart} // Passando a função de limpar o carrinho
+        items={cartItems}
+        removeFromCart={removeFromCart}
+        incrementQuantity={incrementQuantity}
+        decrementQuantity={decrementQuantity}
       />
     </>
   );
