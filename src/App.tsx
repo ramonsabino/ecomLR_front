@@ -1,24 +1,25 @@
+// src/App.tsx
 import React from 'react';
-import Navbar from './components/Navbar/Navbar';
-import CarouselHome from './components/Carousel/Carousel';
-import { Box } from '@mui/material';
-import CategoriesMenu from './components/Categories/CategoriesMenu';
-import LaunchProducts from './components/LaunchProducts/LaunchProducts';
-import SectionProducts from './components/Section/Section';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import Navbar from './components/Navbar/Navbar'; // Supondo que Navbar está em src/components/Navbar
+import Home from './pages/Home/Home';
+import Products from './pages/Products/Product';
+import Contact from './pages/Contact/Contact';
+import ProductDetailPage from './pages/ProductDetail/ProductDetail';
 
-
-function App() {
+const App: React.FC = () => {
   return (
-    <div>
-    <Navbar />
-    <Box mt={2}> 
-        <CarouselHome />
-    </Box>
-    <CategoriesMenu />
-    <LaunchProducts />
-    <SectionProducts />
-    </div>
+    <Router>
+      <Navbar />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/home" element={<Home />} />
+        <Route path="/products" element={<Products />} />
+        <Route path="/product/:productCategory/:productId" element={<ProductDetailPage/>} />
+        <Route path="/contact" element={<Contact />} />
+      </Routes>
+    </Router>
   );
-}
+};
 
 export default App;

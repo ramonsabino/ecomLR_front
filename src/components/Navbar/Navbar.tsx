@@ -15,6 +15,7 @@ import ListItemText from '@mui/material/ListItemText';
 import { styled } from '@mui/system';
 import logo from '../../assets/IconLR.png'; // Importe a imagem da logo
 import { ShoppingCart } from '@mui/icons-material';
+import { Link } from 'react-router-dom';
 
 const Logo = styled(Box)({
   display: 'flex',
@@ -32,18 +33,20 @@ const MenuItemsBox = styled(Box)(({ theme }) => ({
 const Navbar: React.FC = () => {
   const [drawerOpen, setDrawerOpen] = React.useState(false);
 
-  const toggleDrawer = (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
-    if (
-      event.type === 'keydown' &&
-      ((event as React.KeyboardEvent).key === 'Tab' || (event as React.KeyboardEvent).key === 'Shift')
-    ) {
-      return;
-    }
-    setDrawerOpen(open);
-  };
+  const toggleDrawer =
+    (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
+      if (
+        event.type === 'keydown' &&
+        ((event as React.KeyboardEvent).key === 'Tab' ||
+          (event as React.KeyboardEvent).key === 'Shift')
+      ) {
+        return;
+      }
+      setDrawerOpen(open);
+    };
 
   return (
-    <AppBar position="static" color="primary">
+    <AppBar position="static" color="primary" sx={{ bgcolor: '#333' }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <IconButton
@@ -56,11 +59,7 @@ const Navbar: React.FC = () => {
           >
             <MenuIcon />
           </IconButton>
-          <Drawer
-            anchor="left"
-            open={drawerOpen}
-            onClose={toggleDrawer(false)}
-          >
+          <Drawer anchor="left" open={drawerOpen} onClose={toggleDrawer(false)}>
             <Box
               sx={{ width: 250 }}
               role="presentation"
@@ -69,7 +68,7 @@ const Navbar: React.FC = () => {
             >
               <List>
                 {['Home', 'Products', 'Contact'].map((text, index) => (
-                  <ListItem button key={text}>
+                  <ListItem button key={text} component={Link} to={`/${text.toLowerCase()}`}>
                     <ListItemText primary={text} />
                   </ListItem>
                 ))}
@@ -80,11 +79,12 @@ const Navbar: React.FC = () => {
             size="large"
             color="inherit"
             aria-label="search"
+            sx={{ display: { xs: 'none', md: 'flex' } }}
           >
             <SearchIcon />
           </IconButton>
           <Logo>
-            <img src={logo} alt="Logo" style={{ height: '50px' }} /> {/* Reduza a altura da logo */}
+            <img src={logo} alt="Logo" style={{ height: '70px' }} />
           </Logo>
           <IconButton
             size="large"
@@ -96,16 +96,31 @@ const Navbar: React.FC = () => {
           </IconButton>
         </Toolbar>
       </Container>
-      <Divider sx={{ display: { xs: 'none', md: 'block' } }} />
-      <MenuItemsBox sx={{ display: { xs: 'none', md: 'flex' } }}>
-        <Typography variant="h6" component="div" sx={{ marginLeft: 1, marginRight: 1 }}> {/* Reduza o margin */}
-          Home
+      <Divider sx={{ display: { xs: 'none', md: 'block' }, bgcolor: '#444' }} />
+      <MenuItemsBox sx={{ display: { xs: 'none', md: 'flex' }, bgcolor: '#444' }}>
+        <Typography
+          variant="h6"
+          component={Link}
+          to="/home"
+          sx={{ marginLeft: 2, marginRight: 2, color: 'white', textDecoration: 'none' }}
+        >
+          Página Inicial
         </Typography>
-        <Typography variant="h6" component="div" sx={{ marginLeft: 1, marginRight: 1 }}> {/* Reduza o margin */}
-          Products
+        <Typography
+          variant="h6"
+          component={Link}
+          to="/products"
+          sx={{ marginLeft: 2, marginRight: 2, color: 'white', textDecoration: 'none' }}
+        >
+          Produtos
         </Typography>
-        <Typography variant="h6" component="div" sx={{ marginLeft: 1, marginRight: 1 }}> {/* Reduza o margin */}
-          Contact
+        <Typography
+          variant="h6"
+          component={Link}
+          to="/contact"
+          sx={{ marginLeft: 2, marginRight: 2, color: 'white', textDecoration: 'none' }}
+        >
+          Contato
         </Typography>
       </MenuItemsBox>
     </AppBar>

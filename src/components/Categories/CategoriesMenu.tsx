@@ -1,52 +1,57 @@
-// CategoriesMenu.tsx
 import React from 'react';
-import { Typography, Grid, Button, Card, CardContent, CardMedia } from '@mui/material';
-import airdotImage from '../../assets/fones/foneAirDots.jpg'
-import './CategoriesStyle.css'
+import { Typography, Grid, Button, Card, CardContent, CardMedia, Box } from '@mui/material';
+import airdotImage from '../../assets/fones/foneAirDots.jpg';
+import carregadorIos from '../../assets/carregadores/carregadorIos.jpg';
+import caixaJbl from '../../assets/caixasDeSom/caixaJbl.jpg';
+import smartWbs from '../../assets/smartWatch/smartWatch.jpg';
 
-interface Category {
+import './CategoriesStyle.css';
+
+interface Categories {
     name: string;
     image: string;
-  }
-  
+}
 
-const categories: Category[] = [
-    { name: 'Categoria 1', image: airdotImage },
-    { name: 'Categoria 2', image: airdotImage },
-    { name: 'Categoria 3', image: airdotImage },
-    { name: 'Categoria 4', image: airdotImage },
-  ];
+const categories: Categories[] = [
+    { name: 'Fones de Ouvido', image: airdotImage },
+    { name: 'Carregadores', image: carregadorIos },
+    { name: 'Caixas de Som', image: caixaJbl },
+    { name: 'SmartWatch', image: smartWbs },
+];
+
 const CategoriesMenu: React.FC = () => {
   return (
-    <Card variant="outlined" sx={{ p: 2, mt: 4, bgcolor: '#cccfca' }} >
-      <Typography variant="h6" component="div" sx={{ ml: 12, mb: 2 }}>
-        Categorias
-      </Typography>
-      <Grid container spacing={2} justifyContent="center">
-      {categories.map((category, index) => (
-        <Grid item key={index} className="card-container"> {/* Adicionamos a classe card-container */}
-          <a href={`/category/${category.name}`} className="category-link">
-            <Card>
-              <CardMedia
-                component="img"
-                height="100"
-                image={category.image}
-                alt={category.name}
-              />
-              <CardContent>
-                <Typography gutterBottom variant="h5" component="div">
-                  {category.name}
-                </Typography>
-                <Button variant="contained" color="primary">
-                  Ver mais
-                </Button>
-              </CardContent>
-            </Card>
-          </a>
+    <Box sx={{ p: 2, mt: 4 }}>
+      <Card variant="outlined" sx={{ p: 2, bgcolor: '#cccfca', borderRadius: 2, boxShadow: 3 }}>
+        <Typography variant="h5" component="div" sx={{ mb: 2 }}>
+          Categorias
+        </Typography>
+        <Grid container spacing={2} justifyContent="center">
+          {categories.map((categories, index) => (
+            <Grid item key={index} className="card-container">
+              <a href={`/category/${categories.name}`} className="launch-link">
+                <Card sx={{ borderRadius: 2 }}>
+                  <CardMedia
+                    component="img"
+                    height="100"
+                    image={categories.image}
+                    alt={categories.name}
+                  />
+                  <CardContent>
+                    <Typography gutterBottom variant="h6" component="div">
+                      {categories.name}
+                    </Typography>
+                    <Button variant="contained" color="primary">
+                      Ver mais
+                    </Button>
+                  </CardContent>
+                </Card>
+              </a>
+            </Grid>
+          ))}
         </Grid>
-      ))}
-    </Grid>
-    </Card>
+      </Card>
+    </Box>
   );
 };
 

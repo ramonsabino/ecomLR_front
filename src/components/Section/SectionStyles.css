@@ -1,10 +1,18 @@
+/* SectionStyles.css */
 .section-link {
-    text-decoration: none; /* Remove o sublinhado */
-    color: inherit; /* Mantém a cor padrão do link */
-  }
+  text-decoration: none;
+  color: inherit;
+}
 
-  .card-container:hover {
-    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1); /* Adiciona uma sombra sutil */
-    transform: translateY(-5px); /* Move o card ligeiramente para cima */
-    transition: all 0.3s ease; /* Adiciona uma transição suave */
-  }
+.card-container {
+  /* Qualquer estilo adicional que você queira aplicar aos contêineres dos cartões */
+}
+
+.section-link .MuiCard-root {
+  transition: transform 0.3s;
+}
+
+.section-link .MuiCard-root:hover {
+  transform: translateY(-5px);
+  box-shadow: none; /* Remove a sombra */
+}
