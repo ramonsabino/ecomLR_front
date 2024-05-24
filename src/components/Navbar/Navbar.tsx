@@ -233,6 +233,13 @@ const Navbar: React.FC = () => {
             </MenuItem>
             <MenuItem
               component={Link}
+              to="categorias/fones-de-ouvido"
+              onClick={handleProductsMenuClose}
+            >
+              Fones de Ouvido
+            </MenuItem>
+            <MenuItem
+              component={Link}
               to="categorias/smartwatchs"
               onClick={handleProductsMenuClose}
             >
@@ -251,6 +258,20 @@ const Navbar: React.FC = () => {
               onClick={handleProductsMenuClose}
             >
               Peliculas Protetoras
+            </MenuItem>
+            <MenuItem
+              component={Link}
+              to="categorias/suportes-veiculares"
+              onClick={handleProductsMenuClose}
+            >
+              Suportes Veiculares
+            </MenuItem>
+            <MenuItem
+              component={Link}
+              to="categorias/utilitarios"
+              onClick={handleProductsMenuClose}
+            >
+              Utilitários
             </MenuItem>
           </Menu>
           <Typography
