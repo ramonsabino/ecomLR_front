@@ -14,6 +14,7 @@ import ScreenProtectorPage from "./pages/ScreenProtector/ScreenProtectorPage";
 import SmartwatchPage from "./pages/SmartWatch/SmartwatchPage";
 import SupportPage from "./pages/SupportCar/SupportPage";
 import UtilitariesPage from "./pages/Utilitaries/UtilitariesPage";
+import CheckoutPage from "./pages/Checkout/CheckoutPage";
 
 const App: React.FC = () => {
   return (
@@ -25,7 +26,7 @@ const App: React.FC = () => {
           <Route path="/" element={<Home />} />
           <Route path="/products" element={<Products />} />
           <Route
-            path="/product/:productCategory/:productId"
+            path="/categorias/:productCategory/:productId"
             element={<ProductDetailPage />}
           />
           <Route path="categorias/carregadores" element={<ChargersPage />} />
@@ -36,6 +37,8 @@ const App: React.FC = () => {
           <Route path="categorias/suportes-veiculares" element={<SupportPage />} />
           <Route path="categorias/utilitarios" element={<UtilitariesPage />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/checkout" element={<CheckoutPage />} />
+
         </Routes>
       </Router>
     </CartProvider>

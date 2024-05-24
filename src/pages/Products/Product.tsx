@@ -183,7 +183,7 @@ const Products: React.FC = () => {
         <Grid container spacing={2}>
           {filteredProducts.map((product, index) => (
             <Grid item xs={12} sm={6} md={4} key={index}>
-              <Link to={`/product/${product.category}/${product.id}`} style={{ textDecoration: 'none' }}>
+              <Link to={`/categorias/${product.category}/${product.id}`} style={{ textDecoration: 'none' }}>
                 <Card>
                   <CardMedia
                     component="img"

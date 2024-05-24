@@ -38,6 +38,14 @@ const products = [
     image: smartWatch,
     brand: "WBS",
   },
+  {
+    id: 5,
+    name: "Produto 5",
+    price: 10.0,
+    category: "Smartwatch",
+    image: smartWatch,
+    brand: "WBS",
+  },
   // Add more products here
 ];
 
