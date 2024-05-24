@@ -1,52 +1,125 @@
 // products.ts
+// Caixas de som
+import caixaJBLExtreme from '../assets/Caixas/caixaJBLExtreme.jpeg'
+import caixaLehmox from '../assets/Caixas/caixaLehmox.jpg'
+import caixaInova from '../assets/Caixas/caixaInova.jpg'
+import caixaMinifun from '../assets/Caixas/caixaMinifun.jpg'
+import caixaLampada from '../assets/Caixas/lampadaCaixa.jpeg'
+// Utilitarios
+import balanca from '../assets/Utilitaries/balanca.jpeg'
+import hubUsb from '../assets/Utilitaries/hubUsb.jpeg'
+import globo from '../assets/Utilitaries/globo.jpeg'
+import protetorCabo from '../assets/Utilitaries/protetorCabo.jpeg'
+import ringLight from '../assets/Utilitaries/ringLight.jpeg'
 
-import airdotImage from '../assets/fones/foneAirDots.jpg';
-import caixaJbl from '../assets/caixasDeSom/caixaJbl.jpg';
-import carregador from '../assets/carregadores/carregadorIos.jpg';
-import smartWatch from '../assets/smartWatch/smartWatch.jpg';
 
+// ---------------
 const products = [
+  // Inicio Fones
   {
-    id: 1,
-    name: "Produto 1",
-    price: 40.0,
-    category: "Fones",
-    image: airdotImage,
-    brand: "Xiaomi",
-  },
-  {
-    id: 2,
-    name: "Produto 2",
-    price: 120.0,
+    id: 25,
+    name: "Caixa JBL Extreme",
+    price: 50.0,
     category: "Caixas",
-    image: caixaJbl,
+    subCategory: 'Bluetooth',
+    description: 'Caixa extreme JBL com excelente qualidade de som',
+    image: caixaJBLExtreme,
     brand: "JBL",
   },
   {
-    id: 3,
-    name: "Produto 3",
-    price: 40.0,
-    category: "Carregador",
-    image: carregador,
-    brand: "OkGold",
+    id: 26,
+    name: "Caixa de Som Lehmox",
+    price: 50.0,
+    category: "Caixas",
+    subCategory: 'Bluetooth',
+    description: 'Caixa Lehmox com excelente qualidade de som',
+    image: caixaLehmox,
+    brand: "Lehmox",
   },
   {
-    id: 4,
-    name: "Produto 4",
-    price: 90.0,
-    category: "Smartwatch",
-    image: smartWatch,
-    brand: "WBS",
+    id: 27,
+    name: "Caixa de Som Inova",
+    price: 50.0,
+    category: "Caixas",
+    subCategory: 'Radio',
+    description: 'Caixa Lehmox com excelente qualidade de som, com Bluetooth',
+    image: caixaInova,
+    brand: "Inova",
   },
   {
-    id: 5,
-    name: "Produto 5",
-    price: 10.0,
-    category: "Smartwatch",
-    image: smartWatch,
-    brand: "WBS",
+    id: 28,
+    name: "Caixinha de som MiniFun",
+    price: 50.0,
+    category: "Caixas",
+    subCategory: 'Bluetooth',
+    description: 'Mini caixa de som bluetooth, com excelente qualidade de som',
+    image: caixaMinifun,
+    brand: "Minifun",
   },
-  // Add more products here
+  {
+    id: 29,
+    name: "Caixa de Som com Lampada de Led",
+    price: 50.0,
+    category: "Caixas",
+    subCategory: 'Bluetooth',
+    description: 'Faça sua festa com apenas este produto onde é uma lampada de led com várias cores e também uma caixa de som bluetooth',
+    image: caixaLampada,
+    brand: "Lehmox",
+  },
+  // Fim dos Fones
+  // Inicio dos utilitários
+  {
+    id: 30,
+    name: "Balança de precisão até 7KG",
+    price: 50.0,
+    category: "Utilitaries",
+    subCategory: 'Utilitaries',
+    description: 'Balança de precisão de até 7kgs',
+    image: balanca,
+    brand: "Generic",
+  },
+  {
+    id: 31,
+    name: "Globo de luz para festa",
+    price: 30.0,
+    category: "Utilitaries",
+    subCategory: 'Utilitaries',
+    description: 'Faça sua festa com apenas este produto com uma variedades de efeitos e luzes',
+    image: globo,
+    brand: "Lehmox",
+  },
+  {
+    id: 32,
+    name: "HUB de USB com 7 Conexões",
+    price: 50.0,
+    category: "Utilitaries",
+    subCategory: 'Utilitaries',
+    description: 'Hub usb para 7 aparelhos simultaneos com chave de energia',
+    image: hubUsb,
+    brand: "Generic",
+  },
+  {
+    id: 33,
+    name: "Protetor para cabo",
+    price: 5,
+    category: "Utilitaries",
+    subCategory: 'Utilitaries',
+    description: 'Protetor para cabo',
+    image: protetorCabo,
+    brand: "Generic",
+  },
+  {
+    id: 34,
+    name: "Ring Light 6'' ",
+    price: 50.0,
+    category: "Utilitaries",
+    subCategory: 'Utilitaries',
+    description: 'Ring Light de 6" para melhorar a qualidade das suas imagens.',
+    image: ringLight,
+    brand: "Lehmox",
+  },
+ 
+
 ];
 
 export default products;

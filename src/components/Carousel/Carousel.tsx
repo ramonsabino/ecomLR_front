@@ -3,10 +3,10 @@ import React from 'react';
 import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import StyledCarousel from './StyledCarousel';
-import airdotImage from '../../assets/fones/foneAirDots.jpg'
-import foneLehmox from '../../assets/fones/foneLehmox.jpg'
-import caixaJbl from '../../assets/caixasDeSom/caixaJbl.jpg'
-import caixaMinifun from '../../assets/caixasDeSom/caixaMinifun.jpg'
+import airdotImage from '../../assets/Fones/foneAirDots.jpg'
+import foneLehmox from '../../assets/Fones/foneLehmox.jpg'
+import caixaJbl from '../../assets/Caixas/caixaJBLExtreme.jpeg'
+import caixaMinifun from '../../assets/Caixas/caixaMinifun.jpg'
 import logo from '../../assets/favicon_lr.jpg'
 
 

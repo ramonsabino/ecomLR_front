@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from "react";
 import {
   Container,
   Box,
@@ -18,14 +18,12 @@ import {
   Card,
   CardContent,
   CardMedia,
-  IconButton
-} from '@mui/material';
-import { ShoppingCart } from '@mui/icons-material';
-import { Link } from 'react-router-dom';
-import airdotImage from '../../assets/fones/foneAirDots.jpg';
-import caixaJbl from '../../assets/caixasDeSom/caixaJbl.jpg';
-import carregador from '../../assets/carregadores/carregadorIos.jpg';
-import smartWatch from '../../assets/smartWatch/smartWatch.jpg';
+  IconButton,
+} from "@mui/material";
+import { ShoppingCart } from "@mui/icons-material";
+import { Link } from "react-router-dom";
+import { collection, getDocs } from "firebase/firestore";
+import { db } from "../../firebaseConfig";
 
 interface Product {
   id: number;
@@ -36,22 +34,31 @@ interface Product {
   brand: string;
 }
 
-const products: Product[] = [
-  { id: 1, name: "Produto 1", price: 40.0, category: "Fones", image: airdotImage, brand: "Xiaomi" },
-  { id: 2, name: "Produto 2", price: 120.0, category: "Caixas", image: caixaJbl, brand: "JBL" },
-  { id: 3, name: "Produto 3", price: 40.0, category: "Carregador", image: carregador, brand: "OkGold" },
-  { id: 4, name: "Produto 4", price: 90.0, category: "SmartWatch", image: smartWatch, brand: "WBS" },
-  // Add more products here
-];
-
 const Products: React.FC = () => {
+  const [products, setProducts] = useState<Product[]>([]);
   const [category, setCategory] = useState<string>("");
   const [brand, setBrand] = useState<string>("");
   const [minPrice, setMinPrice] = useState<string>("");
   const [maxPrice, setMaxPrice] = useState<string>("");
   const [search, setSearch] = useState<string>("");
   const [menuOpen, setMenuOpen] = useState<boolean>(false);
-  const [filteredProducts, setFilteredProducts] = useState<Product[]>(products);
+  const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      const querySnapshot = await getDocs(collection(db, "produtos"));
+      const productsArray: Product[] = [];
+      querySnapshot.forEach((doc) => {
+        const data = doc.data() as Product;
+        productsArray.push(data);
+      });
+      setProducts(productsArray);
+      setFilteredProducts(productsArray); // Inicializa com todos os produtos
+      console.log(productsArray);
+    };
+
+    fetchProducts();
+  }, []);
 
   const handleApplyFilters = () => {
     let filtered = products.filter((product) => {
@@ -76,7 +83,10 @@ const Products: React.FC = () => {
         matchPrice = false;
       }
 
-      if (search && !product.name.toLowerCase().includes(search.toLowerCase())) {
+      if (
+        search &&
+        !product.name.toLowerCase().includes(search.toLowerCase())
+      ) {
         matchSearch = false;
       }
 
@@ -95,8 +105,8 @@ const Products: React.FC = () => {
   };
 
   return (
-    <Container maxWidth="xl" sx={{ display: 'flex', marginTop: 4 }}>
-      <Box sx={{ width: '250px' }}>
+    <Container maxWidth="xl" sx={{ display: "flex", marginTop: 4 }}>
+      <Box sx={{ width: "250px" }}>
         <Button onClick={() => setMenuOpen(true)}>Filtros</Button>
         <Drawer
           anchor="left"
@@ -183,12 +193,19 @@ const Products: React.FC = () => {
         <Grid container spacing={2}>
           {filteredProducts.map((product, index) => (
             <Grid item xs={12} sm={6} md={4} key={index}>
-              <Link to={`/categorias/${product.category}/${product.id}`} style={{ textDecoration: 'none' }}>
+              <Link
+                to={`/categorias/${product.category}/${product.id}`}
+                style={{ textDecoration: "none" }}
+              >
                 <Card>
                   <CardMedia
                     component="img"
                     height="140"
-                    image={product.image}
+                    image={
+                      product.image
+                        ? require(`../../assets/${product.image}`).default
+                        : ""
+                    }
                     alt={product.name}
                   />
                   <CardContent>

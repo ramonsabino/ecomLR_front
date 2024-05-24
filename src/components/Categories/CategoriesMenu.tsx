@@ -1,9 +1,9 @@
 import React from 'react';
 import { Typography, Grid, Button, Card, CardContent, CardMedia, Box } from '@mui/material';
 import { Link } from 'react-router-dom'; // Importe o componente Link
-import airdotImage from '../../assets/fones/foneAirDots.jpg';
-import carregadorIos from '../../assets/carregadores/carregadorIos.jpg';
-import caixaJbl from '../../assets/caixasDeSom/caixaJbl.jpg';
+import airdotImage from '../../assets/Fones/foneAirDots.jpg';
+import carregadorIos from '../../assets/Carregador/carregadorIos.jpg';
+import caixaJbl from '../../assets/Caixas/caixaJBLExtreme.jpeg';
 import smartWbs from '../../assets/smartWatch/smartWatch.jpg';
 
 import './CategoriesStyle.css';
