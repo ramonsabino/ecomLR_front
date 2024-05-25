@@ -22,36 +22,16 @@ import {
 } from '@mui/material';
 import { ShoppingCart } from '@mui/icons-material';
 import { Link } from 'react-router-dom';
-import airdotImage from '../../assets/Fones/foneAirDots.jpg';
-import caixaJbl from '../../assets/Caixas/caixaJBLExtreme.jpeg';
-import carregador from '../../assets/Carregador/carregadorIos.jpg';
-import smartWatch from '../../assets/smartWatch/smartWatch.jpg';
-
-interface Product {
-  id: number;
-  name: string;
-  price: number;
-  image: string;
-  category: string;
-  brand: string;
-}
-
-const products: Product[] = [
-  { id: 1, name: "Produto 1", price: 40.0, category: "Fones", image: airdotImage, brand: "Xiaomi" },
-  { id: 2, name: "Produto 2", price: 120.0, category: "Caixas", image: caixaJbl, brand: "JBL" },
-  { id: 3, name: "Produto 3", price: 40.0, category: "Carregador", image: carregador, brand: "OkGold" },
-  { id: 4, name: "Produto 4", price: 90.0, category: "SmartWatch", image: smartWatch, brand: "WBS" },
-  // Add more products here
-];
+import { useProductContext } from '../../context/ProductContext';
 
 const Products: React.FC = () => {
+  const { products, filteredProducts, setFilteredProducts } = useProductContext();
   const [category, setCategory] = useState<string>("");
   const [brand, setBrand] = useState<string>("");
   const [minPrice, setMinPrice] = useState<string>("");
   const [maxPrice, setMaxPrice] = useState<string>("");
   const [search, setSearch] = useState<string>("");
   const [menuOpen, setMenuOpen] = useState<boolean>(false);
-  const [filteredProducts, setFilteredProducts] = useState<Product[]>(products);
 
   const handleApplyFilters = () => {
     let filtered = products.filter((product) => {
@@ -181,42 +161,32 @@ const Products: React.FC = () => {
         </Typography>
         <Divider sx={{ marginBottom: 2 }} />
         <Grid container spacing={2}>
-          {filteredProducts.map((product, index) => (
-            <Grid item xs={12} sm={6} md={4} key={index}>
-              <Link to={`/categorias/${product.category}/${product.id}`} style={{ textDecoration: 'none' }}>
-                <Card>
-                  <CardMedia
-                    component="img"
-                    height="140"
-                    image={product.image}
-                    alt={product.name}
-                  />
-                  <CardContent>
-                    <Grid
-                      container
-                      justifyContent="space-between"
-                      alignItems="center"
-                    >
-                      <Grid item>
-                        <Typography gutterBottom variant="h6" component="div">
-                          {product.name}
-                        </Typography>
-                        <Typography variant="body2" color="text.secondary">
-                          Preço: R${product.price}
-                        </Typography>
-                        <Typography variant="body2" color="text.secondary">
-                          Categoria: {product.category}
-                        </Typography>
-                      </Grid>
-                      <Grid item>
-                        <IconButton aria-label="add to cart">
-                          <ShoppingCart />
-                        </IconButton>
-                      </Grid>
-                    </Grid>
-                  </CardContent>
-                </Card>
-              </Link>
+          {filteredProducts.map((product) => (
+            <Grid item xs={12} sm={6} md={4} lg={3} key={product.id}>
+              <Card>
+                <CardMedia
+                  component="img"
+                  height="200"
+                  image={product.image}
+                  alt={product.name}
+                />
+                <CardContent>
+                  <Typography variant="h6">{product.name}</Typography>
+                  <Typography variant="body2" color="text.secondary">
+                    {product.brand}
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary">
+                    R$ {product.price.toFixed(2)}
+                  </Typography>
+                </CardContent>
+                <IconButton
+                  component={Link}
+                  to={`/categorias/${product.category}/${product.id}`}
+                  color="primary"
+                >
+                  <ShoppingCart />
+                </IconButton>
+              </Card>
             </Grid>
           ))}
         </Grid>

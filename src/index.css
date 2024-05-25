@@ -1,14 +1,18 @@
-@import url('https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poetsen+One&display=swap');
+
 body {
   margin: 0;
-  font-family: 'Work Sans', sans-serif;
-  font-weight: 400;
+  font-family: 'Poetsen One', sans-serif; /* Aplica a fonte 'Poetsen One' ao corpo do texto */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: #cccfca;
 }
-font-family: 'Work Sans', sans-serif;
-  font-weight: 400;
+
 code {
-  font-family: 'Work Sans', sans-serif;
+  font-family: 'Poetsen One', sans-serif; /* Aplica a fonte 'Poetsen One' ao elemento <code> */
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Poetsen One', sans-serif; /* Aplica a fonte 'Poetsen One' a todos os títulos */
+  font-weight: normal; /* Certifica-se de que a fonte é usada com o peso normal */
 }

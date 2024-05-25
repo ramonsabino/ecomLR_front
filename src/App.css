@@ -1,0 +1,18 @@
+@import url('https://fonts.googleapis.com/css2?family=Poetsen+One&display=swap');
+
+body {
+  margin: 0;
+  font-family: 'Poetsen One', sans-serif; /* Aplica a fonte 'Poetsen One' ao corpo do texto */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #cccfca;
+}
+
+code {
+  font-family: 'Poetsen One', sans-serif; /* Aplica a fonte 'Poetsen One' ao elemento <code> */
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Poetsen One', sans-serif; /* Aplica a fonte 'Poetsen One' a todos os títulos */
+  font-weight: normal; /* Certifica-se de que a fonte é usada com o peso normal */
+}

@@ -1,10 +1,11 @@
 import React from 'react';
 import { Typography, Grid, Button, Card, CardContent, CardMedia, Box } from '@mui/material';
-import { useProducts } from '../../context/ProductContext';
+import { useProductContext } from '../../context/ProductContext';
 import './SectionStyles.css';
 
 const SectionProducts: React.FC = () => {
-  const products = useProducts();
+  const { products } = useProductContext(); // Use o contexto para obter os produtos
+
 
   // Filtrar os produtos com preço <= 15
   const filteredProducts = products.filter(product => product.price <= 15);
@@ -48,3 +49,4 @@ const SectionProducts: React.FC = () => {
 };
 
 export default SectionProducts;
+

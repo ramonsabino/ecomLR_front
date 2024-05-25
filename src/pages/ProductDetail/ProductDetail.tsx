@@ -104,7 +104,7 @@ const ProductDetailPage: React.FC = () => {
 
               {/* Campo de descrição do produto */}
               <Typography variant="body1" sx={{ mt: 2 }}>
-                Descrição do Produto: Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur, impedit?
+                Descrição do Produto: {product.description}
               </Typography>
             </CardContent>
           </Card>

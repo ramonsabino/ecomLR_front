@@ -8,18 +8,20 @@ import ProductDetailPage from "./pages/ProductDetail/ProductDetail";
 import { CartProvider } from "./context/CartContext";
 import { DeliveryProvider } from "./context/DeliveryContext"; // Importe o DeliveryProvider
 import ChargersPage from "./pages/Chargers/ChargersPage";
-import HeadPhonePage from "./pages/Headphone/HeadphonePage";
 import SpeakerPage from "./pages/Speakers/SpeakersPage";
 import ScreenProtectorPage from "./pages/ScreenProtector/ScreenProtectorPage";
 import SmartwatchPage from "./pages/SmartWatch/SmartwatchPage";
 import SupportPage from "./pages/SupportCar/SupportPage";
 import UtilitariesPage from "./pages/Utilitaries/UtilitariesPage";
 import CheckoutPage from "./pages/Checkout/CheckoutPage";
+import { ProductProvider } from "./context/ProductContext";
+import FonesPage from "./pages/Headphone/HeadphonePage";
 
 const App: React.FC = () => {
   return (
     <CartProvider>
-      <DeliveryProvider> {/* Adicione o DeliveryProvider aqui */}
+      <DeliveryProvider> 
+        <ProductProvider>
         <Router>
           <Navbar />
           <Routes>
@@ -30,7 +32,7 @@ const App: React.FC = () => {
               element={<ProductDetailPage />}
             />
             <Route path="categorias/carregadores" element={<ChargersPage />} />
-            <Route path="categorias/fones-de-ouvido" element={<HeadPhonePage />} />
+            <Route path="categorias/fones-de-ouvido" element={<FonesPage />} />
             <Route path="categorias/caixas-de-som" element={<SpeakerPage />} />
             <Route path="categorias/peliculas" element={<ScreenProtectorPage />} />
             <Route path="categorias/smartwatchs" element={<SmartwatchPage />} />
@@ -40,6 +42,7 @@ const App: React.FC = () => {
             <Route path="/checkout" element={<CheckoutPage />} />
           </Routes>
         </Router>
+        </ProductProvider>
       </DeliveryProvider>
     </CartProvider>
   );
