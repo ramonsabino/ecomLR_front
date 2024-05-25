@@ -19,7 +19,7 @@ const VerticalDivider = styled(Divider)(({ theme }) => ({
 }));
 
 const ChargersPage: React.FC = () => {
-  const chargers = products.filter(product => product.category === 'Carregador'); // Filtrando apenas carregadores
+  const chargers = products.filter(product => product.category === 'Fones'); // Filtrando apenas carregadores
   const [category, setCategory] = useState<string>("");
   const [brand, setBrand] = useState<string>("");
   const [minPrice, setMinPrice] = useState<string>("");
@@ -153,7 +153,7 @@ const ChargersPage: React.FC = () => {
     </FilterMenu>
     <ProductGrid container spacing={2}>
       {products
-        .filter((product) => product.category === 'Carregador') // Filtra apenas os produtos da categoria 'Fones'
+        .filter((product) => product.category === 'Fones') // Filtra apenas os produtos da categoria 'Fones'
         .map((product) => (
           <Grid item xs={12} sm={6} md={4} lg={3} key={product.id}>
             <Card>
