@@ -42,8 +42,8 @@ const MenuItemsBox = styled(Box)(({ theme }) => ({
 
 const SearchContainer = styled(Box)({
   position: "relative",
-  width: "100px", // Ajuste conforme necessário
-  marginLeft: "16px", // Espaçamento entre o botão de busca e a logo
+  width: "100px",
+  marginLeft: "16px", 
 });
 
 const SearchField = styled(TextField)(({ theme }) => ({
@@ -102,7 +102,7 @@ const Navbar: React.FC = () => {
   };
 
   const handleProductsMenuClose = () => {
-    setProductsMenuAnchor(null); // Fechar o menu ao clicar em um item
+    setProductsMenuAnchor(null);
   };
 
   return (

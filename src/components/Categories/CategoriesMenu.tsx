@@ -5,7 +5,8 @@ import airdotImage from '../../assets/Fones/foneAirDots.jpg';
 import carregadorIos from '../../assets/Carregador/carregadorIos.jpg';
 import caixaJbl from '../../assets/Caixas/caixaJBLExtreme.jpeg';
 import smartWbs from '../../assets/smartWatch/smartWatch.jpg';
-
+import balanca from '../../assets/Utilitaries/balanca.jpeg'
+import pelicula from '../../assets/peliculas/pelicula3D.jpg'
 import './CategoriesStyle.css';
 
 interface Categories {
@@ -17,26 +18,36 @@ const categories: Categories[] = [
     { name: 'Fones de Ouvido', image: airdotImage },
     { name: 'Carregadores', image: carregadorIos },
     { name: 'Caixas de Som', image: caixaJbl },
+    { name: 'Peliculas', image: pelicula },
     { name: 'SmartWatchs', image: smartWbs },
+    { name: 'Utilidades', image: balanca },
+
 ];
 
 const formatCategoryName = (name: string) => {
-  // Substitua espaços por hífens e converta para minúsculas
   return name.toLowerCase().replace(/\s+/g, '-');
 }
 
 const CategoriesMenu: React.FC = () => {
   return (
     <Box sx={{ p: 2, mt: 4 }}>
-      <Card variant="outlined" sx={{ p: 2, bgcolor: '#cccfca', borderRadius: 2, boxShadow: 3 }}>
+      <Card variant="outlined" sx={{ p: 2, bgcolor: '#fafafa', borderRadius: 2, boxShadow: 3 }}>
         <Typography variant="h5" component="div" sx={{ mb: 2 }}>
           Categorias
         </Typography>
         <Grid container spacing={2} justifyContent="center">
-          {categories.map((category, index) => ( // Renomeie a variável de iteração para evitar conflito com o nome do array
-            <Grid item key={index} className="card-container">
-              <Link to={`categorias/${formatCategoryName(category.name)}`} className="launch-link"> {/* Use o componente Link */}
-                <Card sx={{ borderRadius: 2 }}>
+          {categories.map((category, index) => ( 
+            <Grid item key={index} className="card-container" sx={{ textDecoration: 'none' }}>
+              <Link to={`categorias/${formatCategoryName(category.name)}`} className="launch-link"> 
+                <Card
+                  sx={{
+                    borderRadius: 2,
+                    '&:hover': {
+                      boxShadow: '0px 3px 5px rgba(0, 0, 0, 0.1)', // Adiciona uma sombra leve
+                      transform: 'scale(1.02)' // Aumenta ligeiramente o tamanho
+                    }
+                  }}
+                >
                   <CardMedia
                     component="img"
                     height="100"

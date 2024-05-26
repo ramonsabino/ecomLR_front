@@ -3,8 +3,7 @@ import { Drawer, List, ListItem, ListItemText, ListItemSecondaryAction, IconButt
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
-import { Link } from 'react-router-dom'; // Importar o Link do React Router DOM
-import CheckoutPage from '../../pages/Checkout/CheckoutPage';
+import { Link } from 'react-router-dom';
 
 interface CartItem {
   id: number;
@@ -68,7 +67,6 @@ const CartSidebar: React.FC<CartSidebarProps> = ({
         <Box display="flex" justifyContent="space-between" alignItems="center" marginBottom={2}>
           <Typography variant="h6">Total: R${total.toFixed(2)}</Typography>
         </Box>
-        {/* Botão Ver Carrinho redireciona para a página de Checkout */}
         <Button component={Link} to="/checkout" variant="contained" color="primary" fullWidth>
           Ver Carrinho
         </Button>

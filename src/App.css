@@ -5,7 +5,7 @@ body {
   font-family: 'Poetsen One', sans-serif; /* Aplica a fonte 'Poetsen One' ao corpo do texto */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: #cccfca;
+  background-color: #fafafa;
 }
 
 code {

@@ -27,6 +27,7 @@ import { useProductContext } from '../../context/ProductContext';
 const ChargersPage: React.FC = () => {
   const { products, filteredProducts, setFilteredProducts } = useProductContext();
   const [category, setCategory] = useState<string>("");
+  const [subCategory, setSubCategory] = useState<string>("");
   const [brand, setBrand] = useState<string>("");
   const [minPrice, setMinPrice] = useState<string>("");
   const [maxPrice, setMaxPrice] = useState<string>("");
@@ -38,12 +39,17 @@ const ChargersPage: React.FC = () => {
   const handleApplyFilters = () => {
     let filtered = products.filter((product) => {
       let matchCategory = true;
+      let matchSubCategory = true;
       let matchBrand = true;
       let matchPrice = true;
       let matchSearch = true;
 
       if (category && product.category !== category) {
         matchCategory = false;
+      }
+
+      if (subCategory && product.subCategory !== subCategory) {
+        matchSubCategory = false;
       }
 
       if (brand && product.brand !== brand) {
@@ -62,7 +68,7 @@ const ChargersPage: React.FC = () => {
         matchSearch = false;
       }
 
-      return matchCategory && matchBrand && matchPrice && matchSearch;
+      return matchCategory && matchSubCategory &&matchBrand && matchPrice && matchSearch;
     });
 
     setFilteredProducts(filtered);
@@ -70,6 +76,7 @@ const ChargersPage: React.FC = () => {
 
     // Reset filter fields
     setCategory("");
+    setSubCategory("");
     setBrand("");
     setMinPrice("");
     setMaxPrice("");
@@ -94,14 +101,14 @@ const ChargersPage: React.FC = () => {
               <FormControl fullWidth>
                 <InputLabel>Categoria</InputLabel>
                 <Select
-                  value={category}
-                  onChange={(e) => setCategory(e.target.value as string)}
+                  value={subCategory}
+                  onChange={(e) => setSubCategory(e.target.value as string)}
                 >
                   <MenuItem value="">Todas as categorias</MenuItem>
-                  <MenuItem value="Fones">Fones de Ouvido</MenuItem>
-                  <MenuItem value="Caixas">Caixas de Som</MenuItem>
-                  <MenuItem value="Carregador">Carregadores</MenuItem>
-                  <MenuItem value="SmartWatch">SmartWatch</MenuItem>
+                  <MenuItem value="Completo">Completos</MenuItem>
+                  <MenuItem value="Cabos">Cabos</MenuItem>
+                  <MenuItem value="Fontes">Fontes</MenuItem>
+                  <MenuItem value="Indução">Indução</MenuItem>
                 </Select>
               </FormControl>
             </ListItem>
@@ -113,10 +120,12 @@ const ChargersPage: React.FC = () => {
                   onChange={(e) => setBrand(e.target.value as string)}
                 >
                   <MenuItem value="">Todas as marcas</MenuItem>
-                  <MenuItem value="Xiaomi">Xiaomi</MenuItem>
-                  <MenuItem value="JBL">JBL</MenuItem>
+                  <MenuItem value="Lehmox">Lehmox</MenuItem>
+                  <MenuItem value="Kaidi">Kaidi</MenuItem>
                   <MenuItem value="OkGold">OkGold</MenuItem>
-                  <MenuItem value="WBS">WBS</MenuItem>
+                  <MenuItem value="Foxconn">Foxconn</MenuItem>
+                  <MenuItem value="Inova">Inova</MenuItem>
+                  <MenuItem value="PMCell">PMCell</MenuItem>
                 </Select>
               </FormControl>
             </ListItem>
@@ -166,36 +175,40 @@ const ChargersPage: React.FC = () => {
         <Grid container spacing={2}>
           {chargers.map((product) => (
             <Grid item xs={12} sm={6} md={4} lg={3} key={product.id}>
-              <Card>
-                <CardMedia
-                  component="img"
-                  height="200"
-                  image={product.image}
-                  alt={product.name}
-                />
-                <CardContent>
-                  <Typography variant="h6">{product.name}</Typography>
-                  <Typography variant="body2" color="text.secondary">
-                    {product.brand}
-                  </Typography>
-                  <Typography variant="body2" color="text.secondary">
-                    R$ {product.price.toFixed(2)}
-                  </Typography>
-                </CardContent>
-                <IconButton
-                  component={Link}
-                  to={`/${product.category}/${product.id}`}
-                  color="primary"
-                >
-                  <ShoppingCart />
-                </IconButton>
-              </Card>
-            </Grid>
-          ))}
-        </Grid>
-      </Box>
-    </Container>
-  );
-};
-
-export default ChargersPage;
+              <Link to={`/categorias/${product.category}/${product.id}`} className="link">
+                <Card>
+                  <CardMedia
+                    component="img"
+                    height="200"
+                    image={product.image}
+                    alt={product.name}
+                  />
+                  <CardContent>
+                    <Typography variant="h6">{product.name}</Typography>
+                    <Typography variant="body2" color="text.secondary">
+                      {product.brand}
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                      R$ {product.price.toFixed(2)}
+                    </Typography>
+                  </CardContent>
+                  <IconButton
+                    component={Link}
+                    to={`/categorias/${
+                      product.category}/${product.id}`}
+                      color="primary"
+                    >
+                      <ShoppingCart />
+                    </IconButton>
+                  </Card>
+                </Link>
+              </Grid>
+            ))}
+          </Grid>
+        </Box>
+      </Container>
+    );
+  };
+  
+  export default ChargersPage;
+  
