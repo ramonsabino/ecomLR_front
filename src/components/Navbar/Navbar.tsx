@@ -1,8 +1,7 @@
 import React, { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { useCart } from "../../context/CartContext";
 import products from "../../context/product";
-
 import {
   AppBar,
   Box,
@@ -20,11 +19,9 @@ import {
   MenuItem,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
-import SearchIcon from "@mui/icons-material/Search";
 import { styled } from "@mui/system";
 import logo from "../../assets/IconLR.png";
-import { ShoppingCart, Close } from "@mui/icons-material";
-import { Link } from "react-router-dom";
+import { ShoppingCart } from "@mui/icons-material";
 import CartSidebar from "../../components/Cart/CartSidebar";
 
 const Logo = styled(Box)({
@@ -39,30 +36,6 @@ const MenuItemsBox = styled(Box)(({ theme }) => ({
   justifyContent: "center",
   padding: theme.spacing(1, 0),
 }));
-
-const SearchContainer = styled(Box)({
-  position: "relative",
-  width: "100px",
-  marginLeft: "16px", 
-});
-
-const SearchField = styled(TextField)(({ theme }) => ({
-  backgroundColor: "white",
-  borderRadius: "50px",
-  width: "100px",
-  "& .MuiOutlinedInput-root": {
-    "& fieldset": {
-      borderColor: "transparent",
-    },
-    "&:hover fieldset": {
-      borderColor: "transparent",
-    },
-    "&.Mui-focused fieldset": {
-      borderColor: "transparent",
-    },
-  },
-}));
-
 interface RouteParams {
   productId: string;
   [key: string]: string | undefined;
@@ -70,7 +43,7 @@ interface RouteParams {
 
 const Navbar: React.FC = () => {
   const [drawerOpen, setDrawerOpen] = useState(false);
-  const [searchOpen, setSearchOpen] = useState(false);
+  const [productsDrawerOpen, setProductsDrawerOpen] = useState(false);
   const [productsMenuAnchor, setProductsMenuAnchor] =
     useState<null | HTMLElement>(null);
   const { productId } = useParams<RouteParams>();
@@ -97,6 +70,14 @@ const Navbar: React.FC = () => {
       setDrawerOpen(open);
     };
 
+  const handleProductsDrawerOpen = () => {
+    setProductsDrawerOpen(true);
+  };
+
+  const handleProductsDrawerClose = () => {
+    setProductsDrawerOpen(false);
+  };
+
   const handleProductsMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
     setProductsMenuAnchor(event.currentTarget);
   };
@@ -104,6 +85,35 @@ const Navbar: React.FC = () => {
   const handleProductsMenuClose = () => {
     setProductsMenuAnchor(null);
   };
+
+  const renderProductMenuItems = () => (
+    <>
+      <MenuItem component={Link} to="/products" onClick={handleProductsMenuClose}>
+        Todos os Produtos
+      </MenuItem>
+      <MenuItem component={Link} to="categorias/carregadores" onClick={handleProductsMenuClose}>
+        Carregadores
+      </MenuItem>
+      <MenuItem component={Link} to="categorias/fones-de-ouvido" onClick={handleProductsMenuClose}>
+        Fones de Ouvido
+      </MenuItem>
+      <MenuItem component={Link} to="categorias/smartwatchs" onClick={handleProductsMenuClose}>
+        SmartWatches
+      </MenuItem>
+      <MenuItem component={Link} to="categorias/caixas-de-som" onClick={handleProductsMenuClose}>
+        Caixas de Som
+      </MenuItem>
+      <MenuItem component={Link} to="categorias/peliculas" onClick={handleProductsMenuClose}>
+        Peliculas Protetoras
+      </MenuItem>
+      <MenuItem component={Link} to="categorias/suportes-veiculares" onClick={handleProductsMenuClose}>
+        Suportes Veiculares
+      </MenuItem>
+      <MenuItem component={Link} to="categorias/utilitarios" onClick={handleProductsMenuClose}>
+        Utilitários
+      </MenuItem>
+    </>
+  );
 
   return (
     <>
@@ -132,38 +142,37 @@ const Navbar: React.FC = () => {
                 onKeyDown={toggleDrawer(false)}
               >
                 <List>
-                  {["Home", "Products", "Contact"].map((text, index) => (
-                    <ListItem
-                      button
-                      key={text}
-                      component={Link}
-                      to={`/${text.toLowerCase()}`}
-                    >
-                      <ListItemText primary={text} />
-                    </ListItem>
-                  ))}
+                  <ListItem button component={Link} to="/" onClick={toggleDrawer(false)}>
+                    <ListItemText primary="Página Inicial" />
+                  </ListItem>
+                  <ListItem button onClick={handleProductsDrawerOpen}>
+                    <ListItemText primary="Produtos" />
+                  </ListItem>
+                  <ListItem button component={Link} to="/contact" onClick={toggleDrawer(false)}>
+                    <ListItemText primary="Contato" />
+                  </ListItem>
                 </List>
               </Box>
             </Drawer>
-            <IconButton
-              size="large"
-              color="inherit"
-              aria-label="search"
-              sx={{ display: { xs: "none", md: "flex" }, ml: 2 }}
-              onClick={() => setSearchOpen(!searchOpen)}
+            <Drawer
+              anchor="left"
+              open={productsDrawerOpen}
+              onClose={handleProductsDrawerClose}
             >
-              {searchOpen ? <SearchIcon /> : <SearchIcon />}
-            </IconButton>
-            {searchOpen && (
-              <SearchContainer>
-                <SearchField
-                  variant="outlined"
-                  size="small"
-                  autoFocus
-                  placeholder="Buscar..."
-                />
-              </SearchContainer>
-            )}
+              <Box
+                sx={{ width: 250 }}
+                role="presentation"
+                onClick={handleProductsDrawerClose}
+                onKeyDown={handleProductsDrawerClose}
+              >
+                <List>
+                  <ListItem>
+                    <ListItemText primary="Categorias" />
+                  </ListItem>
+                  {renderProductMenuItems()}
+                </List>
+              </Box>
+            </Drawer>
             <Logo>
               <Link to="/">
                 <img src={logo} alt="Logo" style={{ height: "70px" }} />
@@ -217,62 +226,7 @@ const Navbar: React.FC = () => {
             open={Boolean(productsMenuAnchor)}
             onClose={handleProductsMenuClose}
           >
-            <MenuItem
-              component={Link}
-              to="/products"
-              onClick={handleProductsMenuClose}
-            >
-              Todos os Produtos
-            </MenuItem>
-            <MenuItem
-              component={Link}
-              to="categorias/carregadores"
-              onClick={handleProductsMenuClose}
-            >
-              Carregadores
-            </MenuItem>
-            <MenuItem
-              component={Link}
-              to="categorias/fones-de-ouvido"
-              onClick={handleProductsMenuClose}
-            >
-              Fones de Ouvido
-            </MenuItem>
-            <MenuItem
-              component={Link}
-              to="categorias/smartwatchs"
-              onClick={handleProductsMenuClose}
-            >
-              SmartWatches
-            </MenuItem>
-            <MenuItem
-              component={Link}
-              to="categorias/caixas-de-som"
-              onClick={handleProductsMenuClose}
-            >
-              Caixas de Som
-            </MenuItem>
-            <MenuItem
-              component={Link}
-              to="categorias/peliculas"
-              onClick={handleProductsMenuClose}
-            >
-              Peliculas Protetoras
-            </MenuItem>
-            <MenuItem
-              component={Link}
-              to="categorias/suportes-veiculares"
-              onClick={handleProductsMenuClose}
-            >
-              Suportes Veiculares
-            </MenuItem>
-            <MenuItem
-              component={Link}
-              to="categorias/utilitarios"
-              onClick={handleProductsMenuClose}
-            >
-              Utilitários
-            </MenuItem>
+            {renderProductMenuItems()}
           </Menu>
           <Typography
             variant="h6"

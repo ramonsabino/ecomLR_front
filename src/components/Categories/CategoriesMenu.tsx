@@ -47,12 +47,14 @@ const CategoriesMenu: React.FC = () => {
                       transform: 'scale(1.02)' // Aumenta ligeiramente o tamanho
                     }
                   }}
+                  variant="outlined"
                 >
                   <CardMedia
                     component="img"
                     height="100"
                     image={category.image}
                     alt={category.name}
+                    
                   />
                   <CardContent>
                     <Typography gutterBottom variant="h6" component="div">

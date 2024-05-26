@@ -27,6 +27,7 @@ import { useProductContext } from '../../context/ProductContext';
 const SmartwatchPage: React.FC = () => {
   const { products, filteredProducts, setFilteredProducts } = useProductContext();
   const [category, setCategory] = useState<string>("");
+  const [subCategory, setSubCategory] = useState<string>("");
   const [brand, setBrand] = useState<string>("");
   const [minPrice, setMinPrice] = useState<string>("");
   const [maxPrice, setMaxPrice] = useState<string>("");
@@ -38,12 +39,17 @@ const SmartwatchPage: React.FC = () => {
   const handleApplyFilters = () => {
     let filtered = products.filter((product) => {
       let matchCategory = true;
+      let matchSubCategory = true;
       let matchBrand = true;
       let matchPrice = true;
       let matchSearch = true;
 
       if (category && product.category !== category) {
         matchCategory = false;
+      }
+
+      if (subCategory && product.subCategory !== subCategory) {
+        matchSubCategory = false;
       }
 
       if (brand && product.brand !== brand) {
@@ -62,7 +68,7 @@ const SmartwatchPage: React.FC = () => {
         matchSearch = false;
       }
 
-      return matchCategory && matchBrand && matchPrice && matchSearch;
+      return matchCategory && matchSubCategory &&matchBrand && matchPrice && matchSearch;
     });
 
     setFilteredProducts(filtered);
@@ -70,11 +76,13 @@ const SmartwatchPage: React.FC = () => {
 
     // Reset filter fields
     setCategory("");
+    setSubCategory("");
     setBrand("");
     setMinPrice("");
     setMaxPrice("");
     setSearch("");
   };
+
 
   return (
     <Container maxWidth="xl" sx={{ display: 'flex', marginTop: 4 }}>
@@ -93,14 +101,11 @@ const SmartwatchPage: React.FC = () => {
               <FormControl fullWidth>
                 <InputLabel>Categoria</InputLabel>
                 <Select
-                  value={category}
-                  onChange={(e) => setCategory(e.target.value as string)}
+                  value={subCategory}
+                  onChange={(e) => setSubCategory(e.target.value as string)}
                 >
                   <MenuItem value="">Todas as categorias</MenuItem>
-                  <MenuItem value="Fones">Fones de Ouvido</MenuItem>
-                  <MenuItem value="Caixas">Caixas de Som</MenuItem>
-                  <MenuItem value="Carregador">Carregadores</MenuItem>
-                  <MenuItem value="SmartWatch">SmartWatch</MenuItem>
+                  <MenuItem value="Smartwatch">Smartwatch</MenuItem>
                 </Select>
               </FormControl>
             </ListItem>
@@ -113,8 +118,6 @@ const SmartwatchPage: React.FC = () => {
                 >
                   <MenuItem value="">Todas as marcas</MenuItem>
                   <MenuItem value="Xiaomi">Xiaomi</MenuItem>
-                  <MenuItem value="JBL">JBL</MenuItem>
-                  <MenuItem value="OkGold">OkGold</MenuItem>
                   <MenuItem value="WBS">WBS</MenuItem>
                 </Select>
               </FormControl>
@@ -159,42 +162,46 @@ const SmartwatchPage: React.FC = () => {
       </Box>
       <Box sx={{ flexGrow: 1, padding: 2 }}>
         <Typography variant="h4" gutterBottom>
-          Smartwatches
+          Smartwatchs
         </Typography>
         <Divider sx={{ marginBottom: 2 }} />
         <Grid container spacing={2}>
           {smart.map((product) => (
             <Grid item xs={12} sm={6} md={4} lg={3} key={product.id}>
-              <Card>
-                <CardMedia
-                  component="img"
-                  height="200"
-                  image={product.image}
-                  alt={product.name}
-                />
-                <CardContent>
-                  <Typography variant="h6">{product.name}</Typography>
-                  <Typography variant="body2" color="text.secondary">
-                    {product.brand}
-                  </Typography>
-                  <Typography variant="body2" color="text.secondary">
-                    R$ {product.price.toFixed(2)}
-                  </Typography>
-                </CardContent>
-                <IconButton
-                  component={Link}
-                  to={`/${product.category}/${product.id}`}
-                  color="primary"
-                >
-                  <ShoppingCart />
-                </IconButton>
-              </Card>
-            </Grid>
-          ))}
-        </Grid>
-      </Box>
-    </Container>
-  );
-};
-
-export default SmartwatchPage;
+              <Link to={`/categorias/${product.category}/${product.id}`} className="link">
+                <Card>
+                  <CardMedia
+                    component="img"
+                    height="200"
+                    image={product.image}
+                    alt={product.name}
+                  />
+                  <CardContent>
+                    <Typography variant="h6">{product.name}</Typography>
+                    <Typography variant="body2" color="text.secondary">
+                      {product.brand}
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                      R$ {product.price.toFixed(2)}
+                    </Typography>
+                  </CardContent>
+                  <IconButton
+                    component={Link}
+                    to={`/categorias/${
+                      product.category}/${product.id}`}
+                      color="primary"
+                    >
+                      <ShoppingCart />
+                    </IconButton>
+                  </Card>
+                </Link>
+              </Grid>
+            ))}
+          </Grid>
+        </Box>
+      </Container>
+    );
+  };
+  
+  export default SmartwatchPage;
+  

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import {
   Container,
   Box,
@@ -18,14 +18,15 @@ import {
   Card,
   CardContent,
   CardMedia,
-  IconButton
-} from '@mui/material';
-import { ShoppingCart } from '@mui/icons-material';
-import { Link } from 'react-router-dom';
-import { useProductContext } from '../../context/ProductContext';
+  IconButton,
+} from "@mui/material";
+import { ShoppingCart } from "@mui/icons-material";
+import { Link } from "react-router-dom";
+import { useProductContext } from "../../context/ProductContext";
 
 const Products: React.FC = () => {
-  const { products, filteredProducts, setFilteredProducts } = useProductContext();
+  const { products, filteredProducts, setFilteredProducts } =
+    useProductContext();
   const [category, setCategory] = useState<string>("");
   const [brand, setBrand] = useState<string>("");
   const [minPrice, setMinPrice] = useState<string>("");
@@ -56,7 +57,10 @@ const Products: React.FC = () => {
         matchPrice = false;
       }
 
-      if (search && !product.name.toLowerCase().includes(search.toLowerCase())) {
+      if (
+        search &&
+        !product.name.toLowerCase().includes(search.toLowerCase())
+      ) {
         matchSearch = false;
       }
 
@@ -75,8 +79,8 @@ const Products: React.FC = () => {
   };
 
   return (
-    <Container maxWidth="xl" sx={{ display: 'flex', marginTop: 4 }}>
-      <Box sx={{ width: '250px' }}>
+    <Container maxWidth="xl" sx={{ display: "flex", marginTop: 4 }}>
+      <Box sx={{ width: "250px" }}>
         <Button onClick={() => setMenuOpen(true)}>Filtros</Button>
         <Drawer
           anchor="left"
@@ -163,30 +167,32 @@ const Products: React.FC = () => {
         <Grid container spacing={2}>
           {filteredProducts.map((product) => (
             <Grid item xs={12} sm={6} md={4} lg={3} key={product.id}>
-              <Card>
-                <CardMedia
-                  component="img"
-                  height="200"
-                  image={product.image}
-                  alt={product.name}
-                />
-                <CardContent>
-                  <Typography variant="h6">{product.name}</Typography>
-                  <Typography variant="body2" color="text.secondary">
-                    {product.brand}
-                  </Typography>
-                  <Typography variant="body2" color="text.secondary">
-                    R$ {product.price.toFixed(2)}
-                  </Typography>
-                </CardContent>
-                <IconButton
-                  component={Link}
-                  to={`/categorias/${product.category}/${product.id}`}
-                  color="primary"
-                >
-                  <ShoppingCart />
-                </IconButton>
-              </Card>
+              <Link to={`/categorias/${product.category}/${product.id}`}>
+                <Card>
+                  <CardMedia
+                    component="img"
+                    height="200"
+                    image={product.image}
+                    alt={product.name}
+                  />
+                  <CardContent>
+                    <Typography variant="h6">{product.name}</Typography>
+                    <Typography variant="body2" color="text.secondary">
+                      {product.brand}
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                      R$ {product.price.toFixed(2)}
+                    </Typography>
+                  </CardContent>
+                  <IconButton
+                    component={Link}
+                    to={`/categorias/${product.category}/${product.id}`}
+                    color="primary"
+                  >
+                    <ShoppingCart />
+                  </IconButton>
+                </Card>
+              </Link>
             </Grid>
           ))}
         </Grid>

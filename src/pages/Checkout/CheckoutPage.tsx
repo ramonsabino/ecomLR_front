@@ -13,8 +13,32 @@ import {
 import DeleteIcon from "@mui/icons-material/Delete";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
+import InputMask from "react-input-mask";
 import { useCart } from "../../context/CartContext";
 import { useDelivery } from "../../context/DeliveryContext"; // Importando o contexto de entrega
+
+const MaskedInput = (props: any) => {
+  const { onChange } = props;
+  return (
+    <InputMask
+      mask="(99) 9 9999-9999"
+      onChange={(e) => {
+        if (e.target.value === "() _ ____-____") {
+          e.target.value = "";
+        }
+        if (onChange) {
+          onChange(e);
+        }
+      }}
+      {...props}
+    />
+  );
+};
+
+const MaskedInputCep = (props: any) => {
+  const { inputRef, ...other } = props;
+  return <InputMask {...other} ref={inputRef} mask="99999-999" />;
+};
 
 const CheckoutPage: React.FC = () => {
   const { cartItems, removeFromCart, incrementQuantity, decrementQuantity } =
@@ -36,11 +60,13 @@ const CheckoutPage: React.FC = () => {
   const handleCepChange = async (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
-    setCep(event.target.value);
-    if (event.target.value.length === 8) {
+    const cepValue = event.target.value;
+    setCep(cepValue);
+
+    if (cepValue.length === 8) {
       try {
         const response = await fetch(
-          `https://viacep.com.br/ws/${event.target.value}/json/`
+          `https://viacep.com.br/ws/${cepValue}/json/`
         );
         const data = await response.json();
         if (!data.erro) {
@@ -49,6 +75,8 @@ const CheckoutPage: React.FC = () => {
       } catch (error) {
         console.error("Error fetching address:", error);
       }
+    } else if (cepValue.length === 0) {
+      setLogradouro(""); // Limpa o campo logradouro quando o cep é apagado
     }
   };
 
@@ -188,13 +216,10 @@ const CheckoutPage: React.FC = () => {
             onChange={(event) => setEmail(event.target.value)}
           />
           <TextField
-            id="phone"
             label="Telefone"
-            variant="outlined"
-            margin="normal"
-            fullWidth
-            value={phone}
-            onChange={(event) => setPhone(event.target.value)}
+            InputProps={{
+              inputComponent: MaskedInput as any,
+            }}
           />
           <RadioGroup
             aria-label="shipping-method"
@@ -223,7 +248,7 @@ const CheckoutPage: React.FC = () => {
                 fullWidth
                 value={cep}
                 onChange={handleCepChange}
-                sx={{ bgcolor: "transparent" }} // Adicione esta linha para manter o background inalterado
+                sx={{ bgcolor: "transparent" }}
               />
               <TextField
                 id="logradouro"
