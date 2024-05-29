@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Navbar from "./components/Navbar/Navbar";
 import Home from "./pages/Home/Home";
 import Products from "./pages/Products/Product";
-import Contact from "./pages/Contact/Contact";
 import ProductDetailPage from "./pages/ProductDetail/ProductDetail";
 import { CartProvider } from "./context/CartContext";
 import { DeliveryProvider } from "./context/DeliveryContext"; // Importe o DeliveryProvider
@@ -16,6 +15,7 @@ import UtilitariesPage from "./pages/Utilitaries/UtilitariesPage";
 import CheckoutPage from "./pages/Checkout/CheckoutPage";
 import { ProductProvider } from "./context/ProductContext";
 import FonesPage from "./pages/Headphone/HeadphonePage";
+import ContactPage from "./pages/Contact/Contact";
 
 const App: React.FC = () => {
   return (
@@ -38,7 +38,7 @@ const App: React.FC = () => {
             <Route path="categorias/smartwatchs" element={<SmartwatchPage />} />
             <Route path="categorias/suportes-veiculares" element={<SupportPage />} />
             <Route path="categorias/utilitarios" element={<UtilitariesPage />} />
-            <Route path="/contact" element={<Contact />} />
+            <Route path="/contact" element={<ContactPage />} />
             <Route path="/checkout" element={<CheckoutPage />} />
           </Routes>
         </Router>

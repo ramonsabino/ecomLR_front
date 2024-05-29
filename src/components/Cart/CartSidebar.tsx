@@ -40,7 +40,7 @@ const CartSidebar: React.FC<CartSidebarProps> = ({
           </Typography>
           {items.map(item => (
             <ListItem key={item.id}>
-              <ListItemText primary={item.name} secondary={`R$ ${item.price.toFixed(2)}`} />
+              <ListItemText primary={item.name} secondary={`R$ ${item.price.toFixed(2)}` } />
               <Box display="flex" alignItems="center">
                 <IconButton onClick={() => decrementQuantity(item.id)} size="small">
                   <RemoveIcon />

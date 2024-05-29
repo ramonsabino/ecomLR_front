@@ -16,3 +16,7 @@
   transform: translateY(-5px);
   box-shadow: none;
 }
+
+.launch-link{
+  text-decoration: none
+}
