@@ -16,7 +16,7 @@ import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 import InputMask from "react-input-mask";
 import { useCart } from "../../context/CartContext";
-import { useDelivery } from "../../context/DeliveryContext"; // Importando o contexto de entrega
+import { useDelivery } from "../../context/DeliveryContext";
 
 const MaskedInput = (props: any) => {
   const { onChange } = props;
@@ -58,7 +58,7 @@ const CheckoutPage: React.FC = () => {
   const [phone, setPhone] = useState("");
   const [showModal, setShowModal] = useState(false);
   const [timerId, setTimerId] = useState<NodeJS.Timeout>();
-  const { getDeliveryPrice } = useDelivery(); // Obtendo a função de cálculo de taxa de entrega do contexto
+  const { getDeliveryPrice } = useDelivery();
 
   const handleCepChange = async (
     event: React.ChangeEvent<HTMLInputElement>
@@ -79,7 +79,7 @@ const CheckoutPage: React.FC = () => {
         console.error("Error fetching address:", error);
       }
     } else if (cepValue.length === 0) {
-      setLogradouro(""); // Limpa o campo logradouro quando o cep é apagado
+      setLogradouro(""); 
     }
   };
 
@@ -89,20 +89,25 @@ const CheckoutPage: React.FC = () => {
     setShippingMethod(event.target.value);
   };
 
-  const deliveryPrice = getDeliveryPrice(cep); // Calculando a taxa de entrega com base no CEP fornecido pelo cliente
+  const deliveryPrice = getDeliveryPrice(cep);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (!name || !phone || (!cep && shippingMethod === "entrega") || (!logradouro && shippingMethod === "entrega") || (!numero && shippingMethod === "entrega")) {
+      alert("Por favor, preencha todos os campos obrigatórios antes de confirmar a compra.");
+      return;
+    }
+
     if (cartItems.length === 0) {
         alert("Seu carrinho está vazio. Adicione produtos ao carrinho antes de finalizar a compra.");
         return;
     }
 
-    setShowModal(true); // Mostra o modal de confirmação
+    setShowModal(true); 
     setTimerId(setTimeout(() => {
-        setShowModal(false); // Fecha o modal após 5 segundos
+        setShowModal(false); 
         redirectToWhatsApp();
-    }, 5000)); // Exibir o modal após a submissão do formulário
+    }, 5000)); 
   };
 
   const closeModal = () => {
@@ -112,7 +117,6 @@ const CheckoutPage: React.FC = () => {
   };
 
   const redirectToWhatsApp = () => {
-    // Construir a mensagem
     let message = `*Informações do Cliente:*\n\n`;
     message += `*Nome:* ${name}\n`;
     message += `*Endereço:* ${logradouro}\n`;
@@ -131,13 +135,17 @@ const CheckoutPage: React.FC = () => {
       message += `*Total:* R$ ${(total + deliveryPrice).toFixed(2)}\n\n`;
     });
 
-    // Codificar a mensagem para a URL do WhatsApp
     const encodedMessage = encodeURIComponent(message);
     const whatsappUrl = `https://wa.me/5585997651791?text=${encodedMessage}`;
 
-    // Redirecionar para a URL do WhatsApp
     window.location.href = whatsappUrl;
+
+    const isFormValid = () => {
+      return !!name && !!phone && ((!cep && shippingMethod === "retirada") || (!!cep && !!logradouro && !!numero && shippingMethod === "entrega"));
+    };
   };
+
+ 
 
   return (
     <Box sx={{ display: "flex", maxWidth: 1000, margin: "auto", padding: 2 }}>
@@ -191,7 +199,6 @@ const CheckoutPage: React.FC = () => {
           alignItems="center"
           marginBottom={2}
         >
-          {/* Exibição da taxa de entrega */}
           <Typography variant="body2">
             Taxa de Entrega: R$ {deliveryPrice.toFixed(2)}
           </Typography>
@@ -202,7 +209,6 @@ const CheckoutPage: React.FC = () => {
           alignItems="center"
           marginBottom={2}
           >
-            {/* Exibição do total, incluindo a taxa de entrega */}
             <Typography variant="h6">
               Total (incluindo frete): R$ {(total + deliveryPrice).toFixed(2)}
             </Typography>
@@ -299,7 +305,6 @@ const CheckoutPage: React.FC = () => {
               Confirmar Compra
             </Button>
           </form>
-          {/* Modal de confirmação */}
           <Modal open={showModal} onClose={closeModal}>
             <Box
               sx={{
