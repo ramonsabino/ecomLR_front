@@ -97,7 +97,7 @@ const CheckoutPage: React.FC = () => {
         alert("Seu carrinho está vazio. Adicione produtos ao carrinho antes de finalizar a compra.");
         return;
     }
-
+    
     setShowModal(true); 
     setTimerId(setTimeout(() => {
         setShowModal(false); 
