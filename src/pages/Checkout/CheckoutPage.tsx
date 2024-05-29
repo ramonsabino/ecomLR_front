@@ -93,12 +93,7 @@ const CheckoutPage: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!name || !phone || (!cep && shippingMethod === "entrega") || (!logradouro && shippingMethod === "entrega") || (!numero && shippingMethod === "entrega")) {
-      alert("Por favor, preencha todos os campos obrigatórios antes de confirmar a compra.");
-      return;
-    }
-
-    if (cartItems.length === 0) {
+       if (cartItems.length === 0) {
         alert("Seu carrinho está vazio. Adicione produtos ao carrinho antes de finalizar a compra.");
         return;
     }
@@ -115,7 +110,6 @@ const CheckoutPage: React.FC = () => {
     redirectToWhatsApp();
     clearTimeout(timerId);
   };
-
   const redirectToWhatsApp = () => {
     let message = `*Informações do Cliente:*\n\n`;
     message += `*Nome:* ${name}\n`;
@@ -136,13 +130,11 @@ const CheckoutPage: React.FC = () => {
     });
 
     const encodedMessage = encodeURIComponent(message);
-    const whatsappUrl = `https://wa.me/5585997651791?text=${encodedMessage}`;
+    const whatsappUrl = `https://wa.me/5585992907301?text=${encodedMessage}`;
 
     window.location.href = whatsappUrl;
 
-    const isFormValid = () => {
-      return !!name && !!phone && ((!cep && shippingMethod === "retirada") || (!!cep && !!logradouro && !!numero && shippingMethod === "entrega"));
-    };
+    
   };
 
  
