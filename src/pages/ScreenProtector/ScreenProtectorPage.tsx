@@ -166,13 +166,13 @@ const ScreenProtectorPage: React.FC = () => {
         <Divider sx={{ marginBottom: 2 }} />
         <Grid container spacing={2}>
           {pelicula.map((product) => (
-            <Grid item xs={12} sm={6} md={4} lg={3} key={product.id}>
-              <Link to={`/categorias/${product.category}/${product.id}`} className="link">
+            <Grid item xs={12} sm={6} md={4} lg={3} key={product._id}>
+              <Link to={`/categorias/${product.category}/${product._id}`} className="link">
                 <Card>
                   <CardMedia
                     component="img"
                     height="200"
-                    image={product.image}
+                    image={`http://localhost:5000${product.image}`}
                     alt={product.name}
                   />
                   <CardContent>
@@ -187,7 +187,7 @@ const ScreenProtectorPage: React.FC = () => {
                   <IconButton
                     component={Link}
                     to={`/categorias/${
-                      product.category}/${product.id}`}
+                      product.category}/${product._id}`}
                       color="primary"
                     >
                       <ShoppingCart />

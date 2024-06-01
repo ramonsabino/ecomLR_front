@@ -64,32 +64,45 @@ const CheckoutPage: React.FC = () => {
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
     const cepValue = event.target.value;
+    console.log("CEP digitado:", cepValue); // Verifica se o valor do CEP está correto
+  
     setCep(cepValue);
-
+  
     if (cepValue.length === 8) {
       try {
         const response = await fetch(
           `https://viacep.com.br/ws/${cepValue}/json/`
         );
         const data = await response.json();
+        console.log("Dados do CEP:", data); // Verifica se os dados do CEP são recebidos corretamente
+  
         if (!data.erro) {
           setLogradouro(data.logradouro);
+          const price = await getDeliveryPrice(cepValue);
+          console.log("Preço do frete:", price.toFixed(2)); // Verifica se o preço do frete é recebido corretamente
+          setDeliveryPrice(price); // Atualiza o estado do preço de entrega
+        } else {
+          setLogradouro("");
+          // Limpar outros campos do endereço se o CEP for inválido
         }
       } catch (error) {
         console.error("Error fetching address:", error);
       }
     } else if (cepValue.length === 0) {
       setLogradouro(""); 
+      // Limpar outros campos do endereço se o campo CEP for limpo
     }
   };
 
+  // Estado para armazenar o preço de entrega
+  const [deliveryPrice, setDeliveryPrice] = useState<number>(0);
+  
   const handleShippingMethodChange = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
     setShippingMethod(event.target.value);
   };
 
-  const deliveryPrice = getDeliveryPrice(cep);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -152,7 +165,7 @@ const CheckoutPage: React.FC = () => {
         <Box>
           {cartItems.map((item) => (
             <Box
-              key={item.id}
+              key={item._id}
               display="flex"
               alignItems="center"
               justifyContent="space-between"
@@ -161,20 +174,20 @@ const CheckoutPage: React.FC = () => {
               <Typography>{item.name}</Typography>
               <Box display="flex" alignItems="center">
                 <IconButton
-                  onClick={() => decrementQuantity(item.id)}
+                  onClick={() => decrementQuantity(item._id)}
                   size="small"
                 >
                   <RemoveIcon />
                 </IconButton>
                 <Typography>{item.quantity}</Typography>
                 <IconButton
-                  onClick={() => incrementQuantity(item.id)}
+                  onClick={() => incrementQuantity(item._id)}
                   size="small"
                 >
                   <AddIcon />
                 </IconButton>
                 <IconButton
-                  onClick={() => removeFromCart(item.id)}
+                  onClick={() => removeFromCart(item._id)}
                   size="small"
                 >
                   <DeleteIcon />
@@ -192,7 +205,7 @@ const CheckoutPage: React.FC = () => {
           marginBottom={2}
         >
           <Typography variant="body2">
-            Taxa de Entrega: R$ {deliveryPrice.toFixed(2)}
+          Taxa de Entrega: R$ {deliveryPrice.toFixed(2)}
           </Typography>
         </Box>
         <Box
@@ -202,7 +215,7 @@ const CheckoutPage: React.FC = () => {
           marginBottom={2}
           >
             <Typography variant="h6">
-              Total (incluindo frete): R$ {(total + deliveryPrice).toFixed(2)}
+            Total (incluindo frete): R$ {(total + deliveryPrice).toFixed(2)}
             </Typography>
           </Box>
         </Box>
@@ -217,6 +230,7 @@ const CheckoutPage: React.FC = () => {
               variant="outlined"
               margin="normal"
               fullWidth
+              required={true}
               value={name}
               onChange={(event) => setName(event.target.value)}
             />
@@ -226,11 +240,13 @@ const CheckoutPage: React.FC = () => {
               variant="outlined"
               margin="normal"
               fullWidth
+              required={true}
               value={email}
               onChange={(event) => setEmail(event.target.value)}
             />
             <TextField
               label="Telefone"
+              required={true}
               InputProps={{
                 inputComponent: MaskedInput as any,
               }}
@@ -239,7 +255,7 @@ const CheckoutPage: React.FC = () => {
               aria-label="shipping-method"
               name="shipping-method"
               value={shippingMethod}
-              onChange={handleShippingMethodChange}
+                            onChange={handleShippingMethodChange}
             >
               <FormControlLabel
                 value="retirada"
@@ -260,6 +276,7 @@ const CheckoutPage: React.FC = () => {
                   variant="outlined"
                   margin="normal"
                   fullWidth
+                  required={true}
                   value={cep}
                   onChange={handleCepChange}
                   sx={{ bgcolor: "transparent" }}
@@ -278,6 +295,7 @@ const CheckoutPage: React.FC = () => {
                   label="Número"
                   variant="outlined"
                   margin="normal"
+                  required={true}
                   fullWidth
                   value={numero}
                   onChange={(event) => setNumero(event.target.value)}

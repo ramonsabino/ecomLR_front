@@ -60,7 +60,7 @@ const LaunchProducts: React.FC = () => {
         <Slider {...settings}>
           {products.slice(0, 20).map((product, index) => (
             <Box
-              key={index}
+              key={product._id} // Usar product.id em vez de index
               sx={{
                 p: 0,
                 "&:hover": { transform: "scale(1.05)" },
@@ -68,7 +68,7 @@ const LaunchProducts: React.FC = () => {
               }}
             >
               <a
-                href={`/categorias/${product.category}/${product.id}`}
+                href={`/categorias/${product.category}/${product._id}`}
                 className="launch-link"
                 style={{ textDecoration: "none" }}
               >
@@ -84,7 +84,7 @@ const LaunchProducts: React.FC = () => {
                   <CardMedia
                     component="img"
                     height="120"
-                    image={product.image}
+                    image={`http://localhost:5000${product.image}`} // Garantir que image está definido
                     alt={product.name}
                   />
                   <CardContent>
@@ -92,7 +92,7 @@ const LaunchProducts: React.FC = () => {
                       {product.name}
                     </Typography>
                     <Typography variant="body2" color="text.secondary">
-                      {product.price}R$
+                      {product.price} R$
                     </Typography>
                     <Button variant="contained" color="primary" sx={{ mt: 2 }}>
                       Ver mais

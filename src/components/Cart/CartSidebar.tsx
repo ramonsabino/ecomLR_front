@@ -6,7 +6,7 @@ import RemoveIcon from '@mui/icons-material/Remove';
 import { Link } from 'react-router-dom';
 
 interface CartItem {
-  id: number;
+  _id: string;
   name: string;
   price: number;
   quantity: number;
@@ -16,9 +16,9 @@ interface CartSidebarProps {
   open: boolean;
   onClose: () => void;
   items: CartItem[];
-  removeFromCart: (id: number) => void;
-  incrementQuantity: (id: number) => void;
-  decrementQuantity: (id: number) => void;
+  removeFromCart: (id: string) => void;
+  incrementQuantity: (id: string) => void;
+  decrementQuantity: (id: string) => void;
 }
 
 const CartSidebar: React.FC<CartSidebarProps> = ({
@@ -39,19 +39,19 @@ const CartSidebar: React.FC<CartSidebarProps> = ({
             Carrinho de Compras
           </Typography>
           {items.map(item => (
-            <ListItem key={item.id}>
+            <ListItem key={item._id}>
               <ListItemText primary={item.name} secondary={`R$ ${item.price.toFixed(2)}` } />
               <Box display="flex" alignItems="center">
-                <IconButton onClick={() => decrementQuantity(item.id)} size="small">
+                <IconButton onClick={() => decrementQuantity(item._id)} size="small">
                   <RemoveIcon />
                 </IconButton>
                 <Typography variant="body1" style={{ margin: '0 8px' }}>{item.quantity}</Typography>
-                <IconButton onClick={() => incrementQuantity(item.id)} size="small">
+                <IconButton onClick={() => incrementQuantity(item._id)} size="small">
                   <AddIcon />
                 </IconButton>
               </Box>
               <ListItemSecondaryAction>
-                <IconButton edge="end" aria-label="delete" onClick={() => removeFromCart(item.id)}>
+                <IconButton edge="end" aria-label="delete" onClick={() => removeFromCart(item._id)}>
                   <DeleteIcon />
                 </IconButton>
               </ListItemSecondaryAction>

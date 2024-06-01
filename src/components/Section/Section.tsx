@@ -17,12 +17,12 @@ const SectionProducts: React.FC = () => {
         <Grid container spacing={2} justifyContent="center">
           {filteredProducts.map((product, index) => (
             <Grid item key={index} className="card-container">
-              <a href={`/categorias/${product.category}/${product.id}`} className="launch-link">
+              <a href={`/categorias/${product.category}/${product._id}`} className="launch-link">
                 <Card sx={{ borderRadius: 2, transition: 'transform 0.3s', '&:hover': { transform: 'scale(1.05)' } }}>
                   <CardMedia
                     component="img"
                     height="100"
-                    image={product.image}
+                    image={`http://localhost:5000${product.image}`}
                     alt={product.name}
                   />
                   <CardContent>

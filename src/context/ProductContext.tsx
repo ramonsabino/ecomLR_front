@@ -1,8 +1,8 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import products from './product'; // Importe os produtos do arquivo products.ts
+import axios from '../axiosConfig';
 
 interface Product {
-  id: number;
+  _id: string;
   name: string;
   category: string;
   subCategory: string;
@@ -29,7 +29,30 @@ export const useProductContext = (): ProductContextProps => {
 };
 
 export const ProductProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  const [filteredProducts, setFilteredProducts] = useState<Product[]>(products); // Inicialize filteredProducts com todos os produtos
+  const [products, setProducts] = useState<Product[]>([]);
+  const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await axios.get('/api/products');
+        const productsWithImagePaths = response.data.map((product: Product) => ({
+          ...product,
+          image: getImagePath(product.image)
+        }));
+        setProducts(productsWithImagePaths);
+        setFilteredProducts(productsWithImagePaths);
+      } catch (error) {
+        console.error('Failed to fetch products:', error);
+      }
+    };
+
+    fetchProducts();
+  }, []);
+
+  const getImagePath = (imagePath: string): string => {
+    return `${imagePath}`;
+  };
 
   return (
     <ProductContext.Provider value={{ products, filteredProducts, setFilteredProducts }}>

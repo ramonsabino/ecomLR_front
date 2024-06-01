@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import { useParams } from 'react-router-dom';
-import { useCart } from '../../context/CartContext'; // Importe o contexto do carrinho
-import products from '../../context/product';
+import React, { useState, useEffect, useRef } from "react";
+import { useParams } from "react-router-dom";
+import { useCart } from "../../context/CartContext";
+import { useProductContext } from "../../context/ProductContext";
 import {
   Card,
   CardContent,
@@ -12,97 +12,112 @@ import {
   Accordion,
   AccordionSummary,
   AccordionDetails,
-  Box
-} from '@mui/material';
-import { Add, Remove, ExpandMore } from '@mui/icons-material';
-import CartSidebar from '../../components/Cart/CartSidebar';
+  Box,
+} from "@mui/material";
+import { ExpandMore } from "@mui/icons-material";
+import CartSidebar from "../../components/Cart/CartSidebar";
 
 interface RouteParams {
   productId: string;
-  [key: string]: string | undefined; // Índice de string para outros parâmetros de rota
+  [key: string]: string | undefined;
 }
 
 const ProductDetailPage: React.FC = () => {
   const { productId } = useParams<RouteParams>();
-  const product = products.find((product) => product.id === Number(productId));
+  const { products } = useProductContext();
+  const product = products.find((product) => product._id === productId);
   const [cartOpen, setCartOpen] = useState<boolean>(false);
-  const { addToCart, cartItems, removeFromCart, clearCart, incrementQuantity, decrementQuantity } = useCart();
-  const [quantity, setQuantity] = useState<number>(1); // Inicializa a quantidade como 1
+  const {
+    addToCart,
+    cartItems,
+    removeFromCart,
+    clearCart,
+    incrementQuantity,
+    decrementQuantity,
+  } = useCart();
+  const [quantity, setQuantity] = useState<number>(1);
+
+  // Novo código para ajustar a altura da imagem
+  const [cardHeight, setCardHeight] = useState(0);
+
+  const productDetailsRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (productDetailsRef.current) {
+      setCardHeight(productDetailsRef.current.clientHeight);
+    }
+  }, []);
 
   if (!product) {
     return <div>Produto não encontrado!</div>;
   }
 
   const handleBuy = () => {
-    // Verifica se o produto já está no carrinho
-    const existingItem = cartItems.find(item => item.id === product.id);
-  
+    const existingItem = cartItems.find((item) => item._id === product._id);
+
     if (existingItem) {
-      // Se o produto já estiver no carrinho, apenas incrementa a quantidade
-      incrementQuantity(product.id);
+      incrementQuantity(product._id);
     } else {
-      // Se o produto não estiver no carrinho, adiciona-o com quantidade 1
       addToCart({
-        id: product.id,
+        _id: product._id,
         name: product.name,
-        quantity: 1, // Quantidade inicial
-        price: product.price
+        quantity: 1,
+        price: product.price,
       });
     }
-  
-    // Abra o carrinho de compras após adicionar o produto
+
     setCartOpen(true);
   };
 
   return (
     <>
       <Grid container spacing={2}>
-        {/* Seção da imagem */}
         <Grid item xs={12} md={6}>
           <CardMedia
             component="img"
-            height="100%"
-            image={product.image}
+            width="100%"
+            height={cardHeight} // Altura dinâmica
+            image={`http://localhost:5000${product.image}`}
             alt={product.name}
           />
         </Grid>
 
-        {/* Seção dos detalhes do produto */}
         <Grid item xs={12} md={6}>
-          <Card>
+          <Card ref={productDetailsRef}>
             <CardContent>
               <Typography variant="h4">Detalhes do Produto</Typography>
-              <Typography variant="h6">Nome do Produto: {product.name}</Typography>
+              <Typography variant="h6">
+                Nome do Produto: {product.name}
+              </Typography>
               <Typography variant="body1">Preço: R${product.price}</Typography>
-              {/* Contador e Botão de comprar */}
-              <Box sx={{ display: 'flex', alignItems: 'center', my: 2 }}>
-                <Button variant="contained" color="primary" sx={{ ml: 0 }} onClick={handleBuy}>
+              <Box sx={{ display: "flex", alignItems: "center", my: 2 }}>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  sx={{ ml: 0 }}
+                  onClick={handleBuy}
+                >
                   Adicionar ao Carrinho
                 </Button>
               </Box>
-              {/* Accordion dos Meios de pagamento */}
               <Accordion>
                 <AccordionSummary expandIcon={<ExpandMore />}>
                   <Typography>Meios de pagamento</Typography>
                 </AccordionSummary>
                 <AccordionDetails>
-                  {/* Conteúdo dos meios de pagamento */}
                   <Typography>Detalhes sobre os meios de pagamento.</Typography>
                 </AccordionDetails>
               </Accordion>
 
-              {/* Accordion dos Meios de envio */}
               <Accordion>
                 <AccordionSummary expandIcon={<ExpandMore />}>
                   <Typography>Meios de envio</Typography>
                 </AccordionSummary>
                 <AccordionDetails>
-                  {/* Conteúdo dos meios de envio */}
                   <Typography>Detalhes sobre os meios de envio.</Typography>
                 </AccordionDetails>
               </Accordion>
 
-              {/* Campo de descrição do produto */}
               <Typography variant="body1" sx={{ mt: 2 }}>
                 Descrição do Produto: {product.description}
               </Typography>
@@ -111,7 +126,6 @@ const ProductDetailPage: React.FC = () => {
         </Grid>
       </Grid>
 
-      {/* Barra lateral do carrinho */}
       <CartSidebar
         open={cartOpen}
         onClose={() => setCartOpen(false)}
