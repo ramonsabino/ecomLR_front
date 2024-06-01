@@ -18,17 +18,22 @@ import CheckoutPage from "./pages/Checkout/CheckoutPage";
 import { ProductProvider } from "./context/ProductContext";
 import FonesPage from "./pages/Headphone/HeadphonePage";
 import ContactPage from "./pages/Contact/Contact";
+import LoginPage from "./pages/Login/LoginPage";
+import { AuthProvider } from "./context/AuthContext";
 
 const App: React.FC = () => {
   return (
     <CartProvider>
       <DeliveryProvider>
         <ProductProvider>
+            <AuthProvider>
           <Router>
+
             <Navbar />
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/products" element={<Products />} />
+              <Route path="/login" element={<LoginPage />} />
               <Route path="/categorias/:productCategory/:productId" element={<ProductDetailPage />} />
               <Route path="categorias/carregadores" element={<ChargersPage />} />
               <Route path="categorias/fones-de-ouvido" element={<FonesPage />} />
@@ -40,7 +45,9 @@ const App: React.FC = () => {
               <Route path="/contact" element={<ContactPage />} />
               <Route path="/checkout" element={<CheckoutPage />} />
             </Routes>
+
           </Router>
+            </AuthProvider>
         </ProductProvider>
       </DeliveryProvider>
     </CartProvider>

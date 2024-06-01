@@ -13,6 +13,7 @@ import {
   AccordionSummary,
   AccordionDetails,
   Box,
+  CircularProgress,
 } from "@mui/material";
 import { ExpandMore } from "@mui/icons-material";
 import CartSidebar from "../../components/Cart/CartSidebar";
@@ -36,9 +37,9 @@ const ProductDetailPage: React.FC = () => {
     decrementQuantity,
   } = useCart();
   const [quantity, setQuantity] = useState<number>(1);
-
-  // Novo código para ajustar a altura da imagem
   const [cardHeight, setCardHeight] = useState(0);
+  const [imagesLoaded, setImagesLoaded] = useState(0);
+  const [totalImages, setTotalImages] = useState(0);
 
   const productDetailsRef = useRef<HTMLDivElement>(null);
 
@@ -46,10 +47,35 @@ const ProductDetailPage: React.FC = () => {
     if (productDetailsRef.current) {
       setCardHeight(productDetailsRef.current.clientHeight);
     }
-  }, []);
+    // Contar o número total de imagens
+    const images = productDetailsRef.current?.getElementsByTagName("img");
+    if (images) {
+      setTotalImages(images.length);
+    }
+  }, [product]);
+
+  const handleImageLoad = () => {
+    setImagesLoaded(imagesLoaded + 1);
+    if (imagesLoaded === totalImages - 1) {
+      // Todas as imagens foram carregadas
+      // Você pode fazer alguma ação aqui, como exibir a página do produto
+    }
+  };
 
   if (!product) {
-    return <div>Produto não encontrado!</div>;
+    return <>
+    <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+        }}
+      >
+        <CircularProgress />
+      </Box>
+    
+    </>
   }
 
   const handleBuy = () => {
@@ -79,6 +105,8 @@ const ProductDetailPage: React.FC = () => {
             height={cardHeight} // Altura dinâmica
             image={`http://localhost:5000${product.image}`}
             alt={product.name}
+            onLoad={() => handleImageLoad()}
+            onError={() => console.error("Erro ao carregar imagem")}
           />
         </Grid>
 

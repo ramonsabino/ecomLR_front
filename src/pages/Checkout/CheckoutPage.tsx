@@ -132,14 +132,13 @@ const CheckoutPage: React.FC = () => {
     message += `*Opção de Entrega:* ${shippingMethod}\n`;
     if (shippingMethod === "entrega") {
       message += `*CEP:* ${cep}\n`;
-      message += `*Frete:* R$ ${deliveryPrice}\n\n`;
     }
     message += `*Produtos no Carrinho:*\n\n`;
 
     cartItems.forEach((item) => {
       message += `*Produto:* ${item.name}\n`;
       message += `*Quantidade:* ${item.quantity}\n\n`;
-      message += `*Total:* R$ ${(total + deliveryPrice).toFixed(2)}\n\n`;
+      message += `*Total:* R$ ${(total).toFixed(2)}\n\n`;
     });
 
     const encodedMessage = encodeURIComponent(message);
@@ -203,19 +202,9 @@ const CheckoutPage: React.FC = () => {
           justifyContent="flex-end"
           alignItems="center"
           marginBottom={2}
-        >
-          <Typography variant="body2">
-          Taxa de Entrega: R$ {deliveryPrice.toFixed(2)}
-          </Typography>
-        </Box>
-        <Box
-          display="flex"
-          justifyContent="flex-end"
-          alignItems="center"
-          marginBottom={2}
           >
             <Typography variant="h6">
-            Total (incluindo frete): R$ {(total + deliveryPrice).toFixed(2)}
+            Total: R$ {(total).toFixed(2)}
             </Typography>
           </Box>
         </Box>

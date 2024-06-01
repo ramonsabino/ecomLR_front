@@ -21,7 +21,7 @@ import {
 import MenuIcon from "@mui/icons-material/Menu";
 import { styled } from "@mui/system";
 import logo from "../../assets/IconLR.png";
-import { ShoppingCart } from "@mui/icons-material";
+import { ShoppingCart, AccountCircle } from "@mui/icons-material"; // Importe o ícone de login (AccountCircle)
 import CartSidebar from "../../components/Cart/CartSidebar";
 
 const Logo = styled(Box)({
@@ -88,28 +88,60 @@ const Navbar: React.FC = () => {
 
   const renderProductMenuItems = () => (
     <>
-      <MenuItem component={Link} to="/products" onClick={handleProductsMenuClose}>
+      <MenuItem
+        component={Link}
+        to="/products"
+        onClick={handleProductsMenuClose}
+      >
         Todos os Produtos
       </MenuItem>
-      <MenuItem component={Link} to="categorias/carregadores" onClick={handleProductsMenuClose}>
+      <MenuItem
+        component={Link}
+        to="categorias/carregadores"
+        onClick={handleProductsMenuClose}
+      >
         Carregadores
       </MenuItem>
-      <MenuItem component={Link} to="categorias/fones-de-ouvido" onClick={handleProductsMenuClose}>
+      <MenuItem
+        component={Link}
+        to="categorias/fones-de-ouvido"
+        onClick={handleProductsMenuClose}
+      >
         Fones de Ouvido
       </MenuItem>
-      <MenuItem component={Link} to="categorias/smartwatchs" onClick={handleProductsMenuClose}>
+      <MenuItem
+        component={Link}
+        to="categorias/smartwatchs"
+        onClick={handleProductsMenuClose}
+      >
         SmartWatches
       </MenuItem>
-      <MenuItem component={Link} to="categorias/caixas-de-som" onClick={handleProductsMenuClose}>
+      <MenuItem
+        component={Link}
+        to="categorias/caixas-de-som"
+        onClick={handleProductsMenuClose}
+      >
         Caixas de Som
       </MenuItem>
-      <MenuItem component={Link} to="categorias/peliculas" onClick={handleProductsMenuClose}>
+      <MenuItem
+        component={Link}
+        to="categorias/peliculas"
+        onClick={handleProductsMenuClose}
+      >
         Peliculas Protetoras
       </MenuItem>
-      <MenuItem component={Link} to="categorias/suportes-veiculares" onClick={handleProductsMenuClose}>
+      <MenuItem
+        component={Link}
+        to="categorias/suportes-veiculares"
+        onClick={handleProductsMenuClose}
+      >
         Suportes Veiculares
       </MenuItem>
-      <MenuItem component={Link} to="categorias/utilitarios" onClick={handleProductsMenuClose}>
+      <MenuItem
+        component={Link}
+        to="categorias/utilitarios"
+        onClick={handleProductsMenuClose}
+      >
         Utilitários
       </MenuItem>
     </>
@@ -142,13 +174,23 @@ const Navbar: React.FC = () => {
                 onKeyDown={toggleDrawer(false)}
               >
                 <List>
-                  <ListItem button component={Link} to="/" onClick={toggleDrawer(false)}>
+                  <ListItem
+                    button
+                    component={Link}
+                    to="/"
+                    onClick={toggleDrawer(false)}
+                  >
                     <ListItemText primary="Página Inicial" />
                   </ListItem>
                   <ListItem button onClick={handleProductsDrawerOpen}>
                     <ListItemText primary="Produtos" />
                   </ListItem>
-                  <ListItem button component={Link} to="/contact" onClick={toggleDrawer(false)}>
+                  <ListItem
+                    button
+                    component={Link}
+                    to="/contact"
+                    onClick={toggleDrawer(false)}
+                  >
                     <ListItemText primary="Contato" />
                   </ListItem>
                 </List>
@@ -187,6 +229,16 @@ const Navbar: React.FC = () => {
             >
               <ShoppingCart />
             </IconButton>
+            <Link to="/login" style={{ textDecoration: 'none', color: 'inherit' }}>
+              <IconButton
+                size="large"
+                color="inherit"
+                aria-label="login"
+                sx={{ ml: 2 }}
+              >
+                <AccountCircle />
+              </IconButton>
+            </Link>
           </Toolbar>
         </Container>
         <Divider
