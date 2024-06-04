@@ -57,6 +57,7 @@ const CheckoutPage: React.FC = () => {
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [showModal, setShowModal] = useState(false);
+  const [emailValid, setEmailValid] = useState(true);
   const [timerId, setTimerId] = useState<NodeJS.Timeout>();
   const { getDeliveryPrice } = useDelivery();
 
@@ -110,7 +111,7 @@ const CheckoutPage: React.FC = () => {
         alert("Seu carrinho está vazio. Adicione produtos ao carrinho antes de finalizar a compra.");
         return;
     }
-    
+
     setShowModal(true); 
     setTimerId(setTimeout(() => {
         setShowModal(false); 
@@ -143,12 +144,14 @@ const CheckoutPage: React.FC = () => {
 
     const encodedMessage = encodeURIComponent(message);
     const whatsappUrl = `https://wa.me/5585992907301?text=${encodedMessage}`;
-
     window.location.href = whatsappUrl;
-
-    
   };
-
+  const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const emailValue = event.target.value;
+    setEmail(emailValue);
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    setEmailValid(emailRegex.test(emailValue));
+  };
  
 
   return (
@@ -223,7 +226,7 @@ const CheckoutPage: React.FC = () => {
               value={name}
               onChange={(event) => setName(event.target.value)}
             />
-            <TextField
+             <TextField
               id="email"
               label="Email"
               variant="outlined"
@@ -231,7 +234,9 @@ const CheckoutPage: React.FC = () => {
               fullWidth
               required={true}
               value={email}
-              onChange={(event) => setEmail(event.target.value)}
+              onChange={handleEmailChange} // Adiciona o manipulador de evento para validar o e-mail em tempo real
+              error={!emailValid} // Define se há erro no campo de e-mail com base no estado de emailValid
+              helperText={!emailValid && "Por favor, insira um endereço de e-mail válido."} // Exibe uma mensagem de erro se o e-mail não for válido
             />
             <TextField
               label="Telefone"

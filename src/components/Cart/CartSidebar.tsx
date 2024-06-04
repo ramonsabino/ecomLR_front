@@ -19,10 +19,10 @@ import { useCart } from "../../context/CartContext";
 
 interface CartItem {
   product: {
-  _id: string;
-  name: string;
-  price: number;
-  }
+    _id: string;
+    name: string;
+    price: number;
+  };
   quantity: number;
 }
 
@@ -77,7 +77,9 @@ const CartSidebar: React.FC<CartSidebarProps> = ({
             <ListItem key={item.product._id}>
               <ListItemText
                 primary={item.product.name}
-                secondary={`R$ ${item.product.price ? item.product.price.toFixed(2) : ''}`}
+                secondary={`R$ ${
+                  item.product.price ? item.product.price.toFixed(2) : ""
+                }`}
               />
               <Box display="flex" alignItems="center">
                 <IconButton
@@ -128,8 +130,12 @@ const CartSidebar: React.FC<CartSidebarProps> = ({
           variant="contained"
           color="primary"
           fullWidth
+          sx={{ mb: 2 }} // Adiciona uma margem na parte inferior
         >
           Ver Carrinho
+        </Button>
+        <Button onClick={onClose} variant="contained" color="info" fullWidth>
+          Continuar comprando
         </Button>
       </div>
     </Drawer>

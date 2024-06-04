@@ -75,15 +75,12 @@ const ProductDetailPage: React.FC = () => {
   }
 
   const handleBuy = async () => {
-    console.log("HandleBuy called");
 
     const existingItem = cartItems.find((item) => item.product._id === product._id);
 
     if (existingItem) {
-      console.log("Item exists, incrementing quantity");
       await incrementQuantity(product._id);
     } else {
-      console.log("Item does not exist, adding to cart");
       await addToCart({
         product: {
           price: product.price,

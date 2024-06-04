@@ -24,7 +24,7 @@ const LoginPage: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false); // Estado para controle do spinner
   const [isLogin, setIsLogin] = useState(true); // Estado para alternar entre login e registro
   const navigate = useNavigate();
-  const { authToken, login, logout } = useAuth(); // Usando o contexto de autenticação
+  const { authToken, login, logout, user } = useAuth(); // Usando o contexto de autenticação
 
   useEffect(() => {
     if (authToken) {
@@ -41,8 +41,9 @@ const LoginPage: React.FC = () => {
     try {
       const response = await api.post("/api/auth/login", { email, password });
       if (response.status === 200) {
-        const { token, userId } = response.data; // Extrai token e userId da resposta
-        login(token, userId); // Chama a função de login do contexto com token e userId
+        const { token, userId } = response.data;  // Extrai token e userId da resposta
+        const user = { name, email }; // Extrai user da resposta
+        login(token, userId, user); // Chama a função de login do contexto com token e userId
         setSuccessMessage("Login realizado com sucesso!");
         setTimeout(() => {
           navigate("/");
@@ -64,14 +65,15 @@ const LoginPage: React.FC = () => {
     setIsLoading(true);
   
     try {
-      const response = await api.post("/api/auth/register", {
+      const response = await api.post("/api/users/register", {
         name,
         email,
         password,
       });
       if (response.status === 201) {
         const { token, userId } = response.data; // Extrai token e userId da resposta
-        login(token, userId); // Chama a função de login do contexto com token e userId
+        const user = { name, email }; // Criando o objeto de usuário
+        login(token, userId, user); // Chama a função de login do contexto com token e userId
         setSuccessMessage("Registro realizado com sucesso!");
         setTimeout(() => {
           navigate("/");
@@ -84,6 +86,7 @@ const LoginPage: React.FC = () => {
     } finally {
       setIsLoading(false);
     }
+    
   };
 
   const handleLogout = () => {
@@ -102,8 +105,10 @@ const LoginPage: React.FC = () => {
             {isLogin ? "Entrar" : "Registrar"}
           </Typography>
           {authToken ? (
-            <Typography variant="h6" align="center" color="green">
-              Você já está logado!
+            <>
+              <Typography variant="h6" align="center" color="green">
+                Logado como:{user?.email}
+              </Typography>
               <CardActions>
                 <Button
                   variant="contained"
@@ -114,7 +119,7 @@ const LoginPage: React.FC = () => {
                   Sair
                 </Button>
               </CardActions>
-            </Typography>
+            </>
           ) : (
             <form onSubmit={isLogin ? handleLogin : handleRegister}>
               {!isLogin && (
