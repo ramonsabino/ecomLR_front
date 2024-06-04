@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import axios from '../axiosConfig';
+import api from '../axiosConfig';
 
 interface Product {
   _id: string;
@@ -35,7 +35,7 @@ export const ProductProvider: React.FC<{ children: ReactNode }> = ({ children })
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await axios.get('/api/products');
+        const response = await api.get('/api/products');
         const productsWithImagePaths = response.data.map((product: Product) => ({
           ...product,
           image: getImagePath(product.image)

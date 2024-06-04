@@ -1,7 +1,24 @@
 import axios from 'axios';
+import { getAuthToken } from './authUtils'; // Função para obter o token de autenticação
 
-const instance = axios.create({
-  baseURL: 'http://localhost:5000',
+const api = axios.create({
+  baseURL: 'http://localhost:5000', // Base URL do seu backend
+  headers: {
+    'Content-Type': 'application/json',
+  },
 });
 
-export default instance;
+api.interceptors.request.use(
+  (config) => {
+    const token = getAuthToken();
+    if (token) {
+      config.headers['Authorization'] = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
+
+export default api;

@@ -45,7 +45,7 @@ const CheckoutPage: React.FC = () => {
   const { cartItems, removeFromCart, incrementQuantity, decrementQuantity } =
     useCart();
   const total = cartItems.reduce(
-    (sum, item) => sum + item.price * item.quantity,
+    (sum, item) => sum + item.product.price * item.quantity,
     0
   );
   const [cep, setCep] = useState("");
@@ -136,7 +136,7 @@ const CheckoutPage: React.FC = () => {
     message += `*Produtos no Carrinho:*\n\n`;
 
     cartItems.forEach((item) => {
-      message += `*Produto:* ${item.name}\n`;
+      message += `*Produto:* ${item.product.name}\n`;
       message += `*Quantidade:* ${item.quantity}\n\n`;
       message += `*Total:* R$ ${(total).toFixed(2)}\n\n`;
     });
@@ -164,35 +164,35 @@ const CheckoutPage: React.FC = () => {
         <Box>
           {cartItems.map((item) => (
             <Box
-              key={item._id}
+              key={item.product._id}
               display="flex"
               alignItems="center"
               justifyContent="space-between"
               marginBottom={1}
             >
-              <Typography>{item.name}</Typography>
+              <Typography>{item.product.name}</Typography>
               <Box display="flex" alignItems="center">
                 <IconButton
-                  onClick={() => decrementQuantity(item._id)}
+                  onClick={() => decrementQuantity(item.product._id)}
                   size="small"
                 >
                   <RemoveIcon />
                 </IconButton>
                 <Typography>{item.quantity}</Typography>
                 <IconButton
-                  onClick={() => incrementQuantity(item._id)}
+                  onClick={() => incrementQuantity(item.product._id)}
                   size="small"
                 >
                   <AddIcon />
                 </IconButton>
                 <IconButton
-                  onClick={() => removeFromCart(item._id)}
+                  onClick={() => removeFromCart(item.product._id)}
                   size="small"
                 >
                   <DeleteIcon />
                 </IconButton>
               </Box>
-              <Typography>R$ {item.price.toFixed(2)}</Typography>
+              <Typography>R$ {item.product.price.toFixed(2)}</Typography>
             </Box>
           ))}
         </Box>

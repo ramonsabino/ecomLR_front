@@ -22,7 +22,6 @@ interface RouteParams {
   productId: string;
   [key: string]: string | undefined;
 }
-
 const ProductDetailPage: React.FC = () => {
   const { productId } = useParams<RouteParams>();
   const { products } = useProductContext();
@@ -47,7 +46,6 @@ const ProductDetailPage: React.FC = () => {
     if (productDetailsRef.current) {
       setCardHeight(productDetailsRef.current.clientHeight);
     }
-    // Contar o número total de imagens
     const images = productDetailsRef.current?.getElementsByTagName("img");
     if (images) {
       setTotalImages(images.length);
@@ -58,13 +56,12 @@ const ProductDetailPage: React.FC = () => {
     setImagesLoaded(imagesLoaded + 1);
     if (imagesLoaded === totalImages - 1) {
       // Todas as imagens foram carregadas
-      // Você pode fazer alguma ação aqui, como exibir a página do produto
     }
   };
 
   if (!product) {
-    return <>
-    <Box
+    return (
+      <Box
         sx={{
           display: "flex",
           justifyContent: "center",
@@ -74,21 +71,26 @@ const ProductDetailPage: React.FC = () => {
       >
         <CircularProgress />
       </Box>
-    
-    </>
+    );
   }
 
-  const handleBuy = () => {
-    const existingItem = cartItems.find((item) => item._id === product._id);
+  const handleBuy = async () => {
+    console.log("HandleBuy called");
+
+    const existingItem = cartItems.find((item) => item.product._id === product._id);
 
     if (existingItem) {
-      incrementQuantity(product._id);
+      console.log("Item exists, incrementing quantity");
+      await incrementQuantity(product._id);
     } else {
-      addToCart({
-        _id: product._id,
-        name: product.name,
+      console.log("Item does not exist, adding to cart");
+      await addToCart({
+        product: {
+          price: product.price,
+          _id: product._id,
+          name: product.name
+        },
         quantity: 1,
-        price: product.price,
       });
     }
 
@@ -102,7 +104,7 @@ const ProductDetailPage: React.FC = () => {
           <CardMedia
             component="img"
             width="100%"
-            height={cardHeight} // Altura dinâmica
+            height={cardHeight}
             image={`http://localhost:5000${product.image}`}
             alt={product.name}
             onLoad={() => handleImageLoad()}

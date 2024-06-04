@@ -86,66 +86,73 @@ const Navbar: React.FC = () => {
     setProductsMenuAnchor(null);
   };
 
-  const renderProductMenuItems = () => (
-    <>
-      <MenuItem
-        component={Link}
-        to="/products"
-        onClick={handleProductsMenuClose}
-      >
-        Todos os Produtos
-      </MenuItem>
-      <MenuItem
-        component={Link}
-        to="categorias/carregadores"
-        onClick={handleProductsMenuClose}
-      >
-        Carregadores
-      </MenuItem>
-      <MenuItem
-        component={Link}
-        to="categorias/fones-de-ouvido"
-        onClick={handleProductsMenuClose}
-      >
-        Fones de Ouvido
-      </MenuItem>
-      <MenuItem
-        component={Link}
-        to="categorias/smartwatchs"
-        onClick={handleProductsMenuClose}
-      >
-        SmartWatches
-      </MenuItem>
-      <MenuItem
-        component={Link}
-        to="categorias/caixas-de-som"
-        onClick={handleProductsMenuClose}
-      >
-        Caixas de Som
-      </MenuItem>
-      <MenuItem
-        component={Link}
-        to="categorias/peliculas"
-        onClick={handleProductsMenuClose}
-      >
-        Peliculas Protetoras
-      </MenuItem>
-      <MenuItem
-        component={Link}
-        to="categorias/suportes-veiculares"
-        onClick={handleProductsMenuClose}
-      >
-        Suportes Veiculares
-      </MenuItem>
-      <MenuItem
-        component={Link}
-        to="categorias/utilitarios"
-        onClick={handleProductsMenuClose}
-      >
-        Utilitários
-      </MenuItem>
-    </>
-  );
+  const renderProductMenuItems = () => [
+    <MenuItem
+      key="todos-os-produtos"
+      component={Link}
+      to="/products"
+      onClick={handleProductsMenuClose}
+    >
+      Todos os Produtos
+    </MenuItem>,
+    <MenuItem
+      key="carregadores"
+      component={Link}
+      to="categorias/carregadores"
+      onClick={handleProductsMenuClose}
+    >
+      Carregadores
+    </MenuItem>,
+    <MenuItem
+      key="fones-de-ouvido"
+      component={Link}
+      to="categorias/fones-de-ouvido"
+      onClick={handleProductsMenuClose}
+    >
+      Fones de Ouvido
+    </MenuItem>,
+    <MenuItem
+      key="smartwatches"
+      component={Link}
+      to="categorias/smartwatchs"
+      onClick={handleProductsMenuClose}
+    >
+      SmartWatches
+    </MenuItem>,
+    <MenuItem
+      key="caixas-de-som"
+      component={Link}
+      to="categorias/caixas-de-som"
+      onClick={handleProductsMenuClose}
+    >
+      Caixas de Som
+    </MenuItem>,
+    <MenuItem
+      key="peliculas"
+      component={Link}
+      to="categorias/peliculas"
+      onClick={handleProductsMenuClose}
+    >
+      Peliculas Protetoras
+    </MenuItem>,
+    <MenuItem
+      key="suportes-veiculares"
+      component={Link}
+      to="categorias/suportes-veiculares"
+      onClick={handleProductsMenuClose}
+    >
+      Suportes Veiculares
+    </MenuItem>,
+    <MenuItem
+      key="utilitarios"
+      component={Link}
+      to="categorias/utilitarios"
+      onClick={handleProductsMenuClose}
+    >
+      Utilitários
+    </MenuItem>,
+  ];
+  
 
   return (
     <>
