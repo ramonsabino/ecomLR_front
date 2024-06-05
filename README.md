@@ -22,10 +22,11 @@ Este é o frontend de um ecommerce completo desenvolvido com React e TypeScript.
 1. **Clone o Repositório**
 
    ```bash
-   git clone https://github.com/seu-usuario/ecommerce-frontend.git
-   cd ecommerce-frontend
+   git clone https://github.com/ramonsabino/ecomLR_front
+   cd ecomLR_front
 npm install
 npm start
+
 ## Contato
 Para mais informações, entre em contato:
 Email: ramon-sabino@hotmail.com
