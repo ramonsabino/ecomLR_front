@@ -6,7 +6,7 @@ import carregadorIos from '../../assets/carregadorTurboIOSLehmox.jpeg';
 import caixaJbl from '../../assets/caixaJBLExtreme.jpeg';
 import smartWbs from '../../assets/smartWatch.jpeg';
 import balanca from '../../assets/balanca.jpeg'
-import pelicula from '../../assets/pelicula3D.jpg'
+import pelicula from '../../assets/pelicula3D.jpeg'
 import './CategoriesStyle.css';
 
 interface Categories {

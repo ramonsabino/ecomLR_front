@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { useCart } from "../../context/CartContext";
-import products from "../../context/product";
 import {
   AppBar,
   Box,
@@ -14,7 +13,6 @@ import {
   List,
   ListItem,
   ListItemText,
-  TextField,
   Menu,
   MenuItem,
 } from "@mui/material";
@@ -23,6 +21,7 @@ import { styled } from "@mui/system";
 import logo from "../../assets/IconLR.png";
 import { ShoppingCart, AccountCircle } from "@mui/icons-material"; // Importe o ícone de login (AccountCircle)
 import CartSidebar from "../../components/Cart/CartSidebar";
+import { useProductContext } from "../../context/ProductContext"; // Importe o contexto de produtos
 
 const Logo = styled(Box)({
   display: "flex",
@@ -47,7 +46,8 @@ const Navbar: React.FC = () => {
   const [productsMenuAnchor, setProductsMenuAnchor] =
     useState<null | HTMLElement>(null);
   const { productId } = useParams<RouteParams>();
-  const product = products.find((product) => product.id === Number(productId));
+  const { products } = useProductContext(); // Use o hook do contexto de produtos
+  const product = products.find((product) => product._id === productId); // Ajuste para usar o _id
   const [cartOpen, setCartOpen] = useState<boolean>(false);
   const {
     addToCart,

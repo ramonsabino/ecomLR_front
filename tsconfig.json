@@ -22,5 +22,5 @@
   },
   "include": [
     "src"
-  ]
+, "bkpAssets/imageMapper.ts", "bkpAssets/product.ts"  ]
 }
