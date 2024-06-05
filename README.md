@@ -32,5 +32,6 @@ npm start
 Para mais informações, entre em contato:
 
 - **Email**: ramon-sabino@hotmail.com
--**LinkedIn**: https://www.linkedin.com/in/ramon-sabino-2904a61b1/
+- 
+- **LinkedIn**: https://www.linkedin.com/in/ramon-sabino-2904a61b1/
 
