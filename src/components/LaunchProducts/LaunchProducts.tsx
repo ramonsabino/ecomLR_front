@@ -69,7 +69,7 @@ const LaunchProducts: React.FC = () => {
         </Typography>
         <Slider {...settings}>
           {products.slice(0, 20).map((product, index) => {
-            const imageUrl = `http://localhost:5000${product.image}`;
+            const imageUrl = `https://ecom-back-def.onrender.com${product.image}`;
             return (
               <Box
                 key={product._id} // Usar product.id em vez de index

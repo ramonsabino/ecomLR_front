@@ -102,7 +102,7 @@ const ProductDetailPage: React.FC = () => {
             component="img"
             width="100%"
             height={cardHeight}
-            image={`http://localhost:5000${product.image}`}
+            image={`https://ecom-back-def.onrender.com${product.image}`}
             alt={product.name}
             onLoad={() => handleImageLoad()}
             onError={() => console.error("Erro ao carregar imagem")}

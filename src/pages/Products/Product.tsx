@@ -172,7 +172,7 @@ const Products: React.FC = () => {
                   <CardMedia
                     component="img"
                     height="200"
-                    image={`http://localhost:5000${product.image}`}
+                    image={`https://ecom-back-def.onrender.com${product.image}`}
                     alt={product.name}
                   />
                   <CardContent>
