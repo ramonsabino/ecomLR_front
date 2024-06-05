@@ -1,12 +1,12 @@
 import React from 'react';
 import { Typography, Grid, Button, Card, CardContent, CardMedia, Box } from '@mui/material';
 import { Link } from 'react-router-dom'; // Importe o componente Link
-import airdotImage from '../../assets/Fones/foneAirDots.jpg';
-import carregadorIos from '../../assets/Carregador/carregadorIos.jpg';
-import caixaJbl from '../../assets/Caixas/caixaJBLExtreme.jpeg';
-import smartWbs from '../../assets/smartWatch/smartWatch.jpg';
-import balanca from '../../assets/Utilitaries/balanca.jpeg'
-import pelicula from '../../assets/peliculas/pelicula3D.jpg'
+import airdotImage from '../../assets/foneJblBT.jpeg';
+import carregadorIos from '../../assets/carregadorTurboIOSLehmox.jpeg';
+import caixaJbl from '../../assets/caixaJBLExtreme.jpeg';
+import smartWbs from '../../assets/smartWatch.jpeg';
+import balanca from '../../assets/balanca.jpeg'
+import pelicula from '../../assets/pelicula3D.jpg'
 import './CategoriesStyle.css';
 
 interface Categories {
